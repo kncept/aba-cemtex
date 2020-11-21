@@ -1,0 +1,40 @@
+plugins {
+    id 'com.kncept.junit.reporter' version '2.0.1'
+	id 'java-library'
+}
+
+group = 'com.kncept'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = 14
+targetCompatibility = 14
+
+def junit5version = '5.7.0'
+
+junitHtmlReport {
+	failOnEmpty = false
+}
+
+repositories {
+	mavenLocal() // ./m2/repositories
+//	maven { url 'https://repo.spring.io/libs-release'}
+	mavenCentral()
+	jcenter()
+}
+
+// use JUnit5 Platform for testing
+test {
+    useJUnitPlatform()
+}
+
+// configure the gradle distribiution we use to build the project
+// https://docs.gradle.org/current/userguide/gradle_wrapper.html#customizing_wrapper
+wrapper {
+	distributionType = Wrapper.DistributionType.BIN
+	gradleVersion = "6.7.1"
+}
+
+
+dependencies {
+	testImplementation "org.junit.jupiter:junit-jupiter-api:" + junit5version
+	testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:" + junit5version
+}
