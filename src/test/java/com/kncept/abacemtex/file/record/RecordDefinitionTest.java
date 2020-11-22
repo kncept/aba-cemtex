@@ -1,5 +1,6 @@
-package com.kncept.abacemtex.record;
+package com.kncept.abacemtex.file.record;
 
+import com.kncept.abacemtex.file.field.FieldDefinition;
 import com.kncept.abacemtex.file.record.RecordDefinition;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -17,12 +18,18 @@ public class RecordDefinitionTest {
     public void recordDefinitionsContainNoDuplicatedFields(RecordDefinition recordDefinition) {
         Set<String> fieldNames = new HashSet<>();
         recordDefinition.fields.forEach(field -> {
-            if (
-                    !field.description.equalsIgnoreCase("blank") &&
-                    !field.description.equalsIgnoreCase("Name of Use supplying file") // Duplicate field names :/
-            ) {
+            if (!field.description.equalsIgnoreCase("Reserved")) {
                 Assertions.assertTrue(fieldNames.add(field.description), "Duplicate field name: " + field.description);
             }
+        });
+    }
+
+    @ParameterizedTest
+    @MethodSource("recordDefinitions")
+    public void recordDefinitionNamesAreSane(RecordDefinition recordDefinition) {
+        Set<String> fieldNames = new HashSet<>();
+        recordDefinition.fields.forEach(field -> {
+            Assertions.assertEquals(field.description.trim(), field.description);
         });
     }
 
@@ -32,6 +39,17 @@ public class RecordDefinitionTest {
         recordDefinition.fields.forEach(field -> {
             Assertions.assertEquals(field.endPos + 1 - field.startPos, field.length, "Length mismatch for field " + field.description);
         });
+    }
+
+    @ParameterizedTest
+    @MethodSource("recordDefinitions")
+    public void recordDefinitionsFieldsAreSequential(RecordDefinition recordDefinition) {
+        int lastPosition = 0;
+        for(FieldDefinition field: recordDefinition.fields) {
+            Assertions.assertEquals(field.startPos -1, lastPosition, "Start position skipped index: " + field.description);
+            lastPosition = field.endPos;
+        }
+        Assertions.assertEquals(lastPosition, 120, "Last field position should be 120");
     }
 
     public static Stream<Arguments> recordDefinitions() {
