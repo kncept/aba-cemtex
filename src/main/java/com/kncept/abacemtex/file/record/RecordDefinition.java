@@ -35,7 +35,7 @@ public class RecordDefinition {
             "Detail Record", 1, new FieldDefinition[]{
             new FieldDefinition(1, 1, 1, "Record type", NUMERIC, true), // Must be '1''
             new FieldDefinition(2, 8, 7, "BSB", ALPHA, true), // Bank/State/Branch number with a hyphen in the 4thcharacter position. e.g. 013-999.
-            new FieldDefinition(9, 17, 9, "Account number", ALPHA, true), // Numeric, alpha, hyphens & blanks are valid.  Right justified, blank filled. Leading zeros that are part of an Account Number must be included.
+            new FieldDefinition(9, 17, 9, "Account", ALPHA, true), // Numeric, alpha, hyphens & blanks are valid.  Right justified, blank filled. Leading zeros that are part of an Account Number must be included.
             new FieldDefinition(18, 18, 1, "Withholding Tax Indicator", ALPHA,  false),
 //                    "\"N\" – for new or varied Bank/State/Branch number or name details, otherwise blank filled.\n" +
 //                    "Withholding Tax Indicators:\n" +
@@ -49,13 +49,13 @@ public class RecordDefinition {
             new FieldDefinition(31, 62, 32, "Account title", ALPHA, true),
             new FieldDefinition(63, 80, 18, "Lodgement Reference", ALPHA, true), // Produced on the recipient’s Account Statement All coded character set valid. Field must be left justified
             new FieldDefinition(81, 87, 7, "Trace BSB", ALPHA, true), // source bsb
-            new FieldDefinition(88, 96, 9, "Trace Account number", ALPHA, true), // source account number
+            new FieldDefinition(88, 96, 9, "Trace Account", ALPHA, true), // source account number
             new FieldDefinition(97, 112, 16, "Remitter", ALPHA, true), // Produced on the recipient’s Account Statement. "Name of originator of the entry. This may vary from Name of the User. All coded character set valid. Must not contain all blanks. Left justified, blank filled."),
             new FieldDefinition(113, 120, 8, "Withholding amount", NUMERIC, false) // Amount of Withholding Tax. Numeric only valid. Show in cents without punctuation. Right justified, zero filled. Unsigned.
     });
 
     public static RecordDefinition TYPE_7 = new RecordDefinition(
-            "Batch Control Record ", (byte) 7, new FieldDefinition[]{
+            "Batch Control Record ", 7, new FieldDefinition[]{
             new FieldDefinition(1, 1, 1, "Record type", NUMERIC, true), //"Must be '7'
             new FieldDefinition(2, 8, 7, "Reserved", ALPHA, true), // Must be '999-999'
             new FieldDefinition(9, 20, 12, "Reserved", ALPHA, false), // Must be blank filled.
@@ -74,21 +74,5 @@ public class RecordDefinition {
         this.name = name;
         this.type = type;
         this.fields = Arrays.asList(fields);
-    }
-
-    // some caveats about different bank requirements
-    // http://tom0wu.blogspot.com/2014/05/australia-banks-integrate-with-aba-file.html
-
-    /**
-     * Unverified, Incomplete list of Australian Banks
-     */
-    public static class BankDefinitionStrings {
-        public static final String AustraliaNewZealandBank = "ANZ";
-        public static final String BankOfQueensland = "BQL";
-        public static final String CommonwealthBankAustralia = "CBA";
-        // NetBank doesn't require an APCA ID (also known as Bank Code). If prompted for an APCA ID you can enter 0000.
-        // Account name with special characters (such as *, % or / ) won't be imported within your file. Please remove any special characters from the account names within your file before trying again
-        public static final String NationalAustraliaBank = "NAB";
-        public static final String Westpac = "WBC";
     }
 }

@@ -1,6 +1,5 @@
 package com.kncept.abacemtex.file.field;
 
-import com.kncept.abacemtex.file.field.FieldType;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

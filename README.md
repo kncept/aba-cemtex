@@ -8,7 +8,20 @@ I've worked with these files many times, and every single company has a differen
 Not only that, but the implementation typically involves long, undelimited strings of values.
 I needed an Industrial Grade implementation, so here it is.
 
+# Quickstart
+Pending release... will go onto maven central looking something like this:
+    `com.kncept.abacemtex:abacemtex:1.0.0`
+
+Then use one of the `com.kncept.abacemtex.AbaCemtex.*` methods. It's that easy.
+
 ### References
+Breadcrumbs for partial information about file format and bank caveats.
 * https://www.anz.com/Documents/AU/corporate/clientfileformats.pdf
 * https://www.cemtexaba.com/aba-format/cemtex-aba-file-format-details
 * http://tom0wu.blogspot.com/2014/05/australia-banks-integrate-with-aba-file.html
+* https://www.commbank.com.au/support.digital-banking.importing-files-into-netbank.html
+
+### verification tools
+Either test data was sourced from here, or a provided 'validation tool' was used to validate output
+* https://www.cemtexaba.com/
+* http://callidex.com/?p=162

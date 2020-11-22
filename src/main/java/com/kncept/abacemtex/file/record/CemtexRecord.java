@@ -25,7 +25,6 @@ public abstract class CemtexRecord<T extends CemtexRecord<T>> {
     }
     public T value(FieldDefinition field, Object value) {
         if (!definition.fields.contains(field)) throw new IllegalStateException("Field not part of " + definition.name + " definition");
-
         if (value == null) {
             values.remove(field);
         } else {
@@ -34,11 +33,20 @@ public abstract class CemtexRecord<T extends CemtexRecord<T>> {
         return (T) this;
     }
 
+    public Object getValue(String fieldName) {
+        return getValue(fieldDefinition(fieldName));
+    }
+    public Object getValue(FieldDefinition field) {
+        if (!definition.fields.contains(field)) throw new IllegalStateException("Field not part of " + definition.name + " definition");
+        return values.get(field);
+    }
+
     public Set<String> validate() {
         final Set<String> errors = new LinkedHashSet<>();
         definition.fields.stream()
             .filter(field -> field.required)
             .filter(field -> !values.containsKey(field))
+            .filter(field -> !field.description.equals("Reserved")) //TODO: switch this understand defaulted fields
             .forEachOrdered(field -> errors.add("Missing required field: " + field.description));
         values.keySet().stream()
             .forEachOrdered(field -> errors.addAll(validateField(field, values.get(field))));

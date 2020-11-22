@@ -1,7 +1,7 @@
 package com.kncept.abacemtex;
 
 /**
- * https://www.cemtexaba.com/aba-format/cemtex-aba-file-format-details
+ * 13 (General Debit - inbound to org) and 50 (General Credit - outbound from org) are likely to be your most common use case
  */
 public enum TransactionCode {
     code_13(13, "Externally initiated debit items"),

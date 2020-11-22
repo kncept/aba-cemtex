@@ -13,35 +13,68 @@ public class CemtexFile {
     FooterRecord footer;
 
     public static Builder builder(Consumer<HeaderRecord> recordBuilder) {
-        return new Builder(recordBuilder);
+        return new Builder(recordBuilder, true);
+    }
+    public static Builder builderWithNoValidation(Consumer<HeaderRecord> recordBuilder) {
+        return new Builder(recordBuilder, false);
     }
 
-    static class Builder {
-        CemtexFile file = new CemtexFile();
-        private Builder(Consumer<HeaderRecord> recordBuilder) {
+    public static class Builder {
+        private final CemtexFile file;
+        private final boolean validation;
+        private Builder(Consumer<HeaderRecord> recordBuilder, boolean validation) {
             file = new CemtexFile();
+            this.validation = validation;
             HeaderRecord record = new HeaderRecord();
             recordBuilder.accept(record);
-            validate(record);
+            if (validation) validate(record);
             file.header = record;
         }
 
         public Builder record(Consumer<DetailRecord> recordBuilder) {
             DetailRecord record = new DetailRecord();
-            // TODO: pre calculate any values possible
+
+            //precalculate values where possible
+
+            //if set, this will carry them forwards
+            record.orgAccount(
+                    (String)file.header.getValue("BSB"),
+                    (String)file.header.getValue("Account"));
+            record.remitter((String)file.header.getValue("User Name"));
+
             recordBuilder.accept(record);
-            validate(record);
+            if (validation) validate(record);
             file.body.add(record);
             return this;
         }
 
-        public CemtexFile footer(Consumer<FooterRecord> recordBuilder) {
+        public CemtexFile build(Consumer<FooterRecord> recordBuilder) {
             FooterRecord record = new FooterRecord();
-            // TODO: pre calculate any values possible
+
+            long debitTotal = 0;
+            long creditTotal = 0;
+
+            for(DetailRecord detail: file.body) {
+                long amount = (Long)detail.getValue("Amount");
+                if (detail.isOutbound()) {
+                    creditTotal += amount;
+                } else {
+                    debitTotal += amount;
+                }
+            }
+            record.creditTotal(creditTotal);
+            record.debitTotal(debitTotal);
+            record.itemCount(file.body.size());
+
             recordBuilder.accept(record);
             validate(record);
+            if (validation) validate(record);
             file.footer = record;
             return file;
+        }
+
+        public CemtexFile build() {
+            return build(record -> {});
         }
 
         private void validate(CemtexRecord record) {

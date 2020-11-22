@@ -1,29 +1,38 @@
 package com.kncept.abacemtex.file;
 
-import com.kncept.abacemtex.file.HeaderRecord;
-import com.kncept.abacemtex.file.record.RecordDefinition;
-import org.junit.jupiter.api.Assertions;
+import com.kncept.abacemtex.file.field.BankMnemonic;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
 import java.util.Set;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 public class HeaderRecordTest {
 
     @Test
     public void canBuildBasicRecord() {
-        HeaderRecord headerRecord = new HeaderRecord()
+        HeaderRecord record = new HeaderRecord()
 
-        // TODO This should trigger 'bank specific' behaviour.
-        .financialInstitution(RecordDefinition.BankDefinitionStrings.CommonwealthBankAustralia)
-        .orgUserDetails("My Account Name", "0000")
+        .financialInstitution(BankMnemonic.CommonwealthBankAustralia)
+        .orgUserName("My Account Name")
         .description("Test File")
         .dateToBeProcessed(LocalDate.now())
         ;
 
-        Set<String> validationErrors = headerRecord.validate();
-        Assertions.assertTrue(validationErrors.isEmpty(), validationErrors.toString());
+        Set<String> validationErrors = record.validate();
+        assertTrue(validationErrors.isEmpty(), validationErrors.toString());
+        assertEquals(record.toRecord().length(), 120);
 
-        System.out.println(headerRecord.toRecord());
+        System.out.println(record.toRecord());
+    }
+
+    @Test
+    public void cbaAutoPopulatesBankUserId() {
+        HeaderRecord record = new HeaderRecord();
+        assertNull(record.getValue("User Identification number"));
+        record.financialInstitution(BankMnemonic.CommonwealthBankAustralia);
+        assertEquals(record.getValue("User Identification number"), "0000");
+
     }
 }
