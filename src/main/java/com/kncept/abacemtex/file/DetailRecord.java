@@ -1,6 +1,6 @@
 package com.kncept.abacemtex.file;
 
-import com.kncept.abacemtex.TransactionCode;
+import com.kncept.abacemtex.file.record.TransactionCode;
 import com.kncept.abacemtex.file.record.CemtexRecord;
 import com.kncept.abacemtex.file.record.RecordDefinition;
 
@@ -9,7 +9,6 @@ import java.math.BigDecimal;
 public class DetailRecord extends CemtexRecord<DetailRecord> {
     public DetailRecord() {
         super(RecordDefinition.TYPE_1);
-        value("Record type", 1);
     }
 
     public DetailRecord participantAccount(String bsb, String accountNumber, String accountName) {
@@ -32,7 +31,7 @@ public class DetailRecord extends CemtexRecord<DetailRecord> {
     public boolean isOutbound() {
         TransactionCode transactionCode = (TransactionCode) getValue("Transaction Code");
         if (transactionCode == null) throw new IllegalStateException("No direction yet set");
-        return transactionCode != TransactionCode.code_13; // the only inbound payment
+        return transactionCode.isOutbound();
     }
 
     public DetailRecord standardOutbound(BigDecimal amountInDollars) {

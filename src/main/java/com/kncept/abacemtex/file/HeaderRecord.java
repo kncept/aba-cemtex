@@ -10,8 +10,6 @@ import java.time.LocalTime;
 public class HeaderRecord extends CemtexRecord<HeaderRecord> {
     public HeaderRecord() {
         super(RecordDefinition.TYPE_0);
-        value("Record type", 0);
-        value("Sequence number", "01");
     }
 
     public HeaderRecord orgAccount(String bsb, String accountNumber) {
@@ -43,6 +41,9 @@ public class HeaderRecord extends CemtexRecord<HeaderRecord> {
     }
 
     public HeaderRecord dateToBeProcessed(LocalDate date) {
+        return value("Date to be processed", date);
+    }
+    public HeaderRecord dateToBeProcessed(String date) {
         return value("Date to be processed", date);
     }
 

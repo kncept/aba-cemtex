@@ -2,7 +2,10 @@ package com.kncept.abacemtex.file.record;
 
 import com.kncept.abacemtex.file.field.FieldDefinition;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.LinkedHashSet;
+import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public abstract class CemtexRecord<T extends CemtexRecord<T>> {
@@ -44,39 +47,23 @@ public abstract class CemtexRecord<T extends CemtexRecord<T>> {
     public Set<String> validate() {
         final Set<String> errors = new LinkedHashSet<>();
         definition.fields.stream()
-            .filter(field -> field.required)
-            .filter(field -> !values.containsKey(field))
-            .filter(field -> !field.description.equals("Reserved")) //TODO: switch this understand defaulted fields
-            .forEachOrdered(field -> errors.add("Missing required field: " + field.description));
-        values.keySet().stream()
-            .forEachOrdered(field -> errors.addAll(validateField(field, values.get(field))));
-        return errors;
-    }
-
-    public Set<String> validateField(FieldDefinition field, Object value) {
-        Set<String> errors = new LinkedHashSet<>();
-        if (value == null) {
-            errors.add("Null value for field " + field.description);
-        } else {
-            String stringValue = toValueString(field, value);
-            if (!field.type.isValid(stringValue)) {
-                errors.add("value " + value + " is not valid for type " + field.type.name());
-            }
-        }
-
+            .forEachOrdered(field -> errors.addAll(field.validate(values.get(field))));
         return errors;
     }
 
     private String toValueString(FieldDefinition field, Object value) {
-//        if (value == null) field.defaultValue();
-
-        return value.toString();
+        return field.parse(value);
     }
 
     public String toRecord() {
         StringBuilder sb = new StringBuilder();
         definition.fields.stream().forEachOrdered(field -> {
-            sb.append(toValueString(field, values.get(field)));
+            if ("null".equals(field.parse(values.get(field)))) {
+                new Object();
+            } else if (field.parse(values.get(field)) == null) {
+                new Object();
+            }
+            sb.append(field.parse(values.get(field)));
         });
         return sb.toString();
     }

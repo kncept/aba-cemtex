@@ -17,10 +17,10 @@ public enum BankMnemonic {
         this.id = id;
     }
 
-    public static BankMnemonic lookup(String mneumonic) {
-        if (mneumonic == null) return null;
+    public static BankMnemonic lookup(String id) {
+        if (id == null) return null;
         for(BankMnemonic knownBank: values()) {
-            if (knownBank.id.equals(mneumonic))
+            if (knownBank.id.equals(id))
                 return knownBank;
         }
         return null;
