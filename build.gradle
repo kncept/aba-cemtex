@@ -2,12 +2,18 @@ plugins {
     id 'com.kncept.junit.reporter' version '2.0.1'
 	id 'java-library'
 	id 'maven-publish'
+	id 'signing'
 }
 
-group = 'com.kncept'
-version = '0.0.1-SNAPSHOT'
+group = 'com.kncept.abacemtex'
+// 'snapshot' versions may not be released to OSSRH
+version = '0.0.1'
 sourceCompatibility = 14
 targetCompatibility = 14
+description = """
+A Java open source implemention of the ABA Cemtex File format.
+Includes builders, parsers and validation.
+"""
 
 def junit5version = '5.7.0'
 
@@ -20,6 +26,11 @@ repositories {
 //	maven { url 'https://repo.spring.io/libs-release'}
 	mavenCentral()
 	jcenter()
+}
+
+java {
+	withJavadocJar()
+	withSourcesJar()
 }
 
 // use JUnit5 Platform for testing
@@ -41,6 +52,8 @@ dependencies {
 	testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:" + junit5version
 }
 
+String publishUsername = project.hasProperty('ossrhUsername') ? ossrhUsername : System.getenv("MAVEN_USERNAME")
+String publishPassword = project.hasProperty('ossrhPassword') ? ossrhPassword : System.getenv("MAVEN_PASSWORD")
 
 publishing {
 	publications {
@@ -73,6 +86,33 @@ publishing {
 				}
 			}
 		}
+	}
+	repositories {
+//		https://docs.github.com/en/free-pro-team@latest/actions/guides/publishing-java-packages-with-gradle
+		maven {
+			name = "OSSRH"
+			url = "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
+			credentials {
+				username = publishUsername
+				password = publishPassword
+			}
+		}
+	}
+}
+
+signing {
+	sign publishing.publications.mavenJava
+}
+tasks.withType(Sign) {
+	onlyIf {
+//		isReleaseVersion
+		new File('gradle.properties').exists() // only sign locally at the moment
+	}
+}
+
+javadoc {
+	if(JavaVersion.current().isJava9Compatible()) {
+		options.addBooleanOption('html5', true)
 	}
 }
 

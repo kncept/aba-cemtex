@@ -16,6 +16,7 @@ Then use one of the `com.kncept.abacemtex.AbaCemtex.*` methods. It's that easy.
 
 # Publishing
 `./gradlew publishToMavenLocal`
+or, set these env props: MAVEN_USERNAME, MAVEN_PASSWORD
 `./gradlew publish`
 
 ### References
