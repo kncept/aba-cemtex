@@ -21,7 +21,7 @@ public class TransactionCodeSqueezer implements ValueSqueezer {
     public Set<String> validate(FieldDefinition field, Object value) {
         if (value != null && !(value instanceof TransactionCode)) {
             if (TransactionCode.lookup(value.toString()) == null) {
-                return Set.of(field.description + " value " + value + " is not a valid Transaction Code");
+                return Set.of(field.validationErrorString(value,"is not a valid Transaction Code"));
             }
         }
         return Collections.emptySet();

@@ -27,7 +27,7 @@ public class NumericSqueezer implements ValueSqueezer {
     public Set<String> validate(FieldDefinition field, Object value) {
         if (value != null) {
             String stringValue = squeeze(field, value);
-            if (!pattern.matcher(stringValue).matches()) return Set.of(field.description + " value " + value + " is not numeric");
+            if (!pattern.matcher(stringValue).matches()) return Set.of(field.validationErrorString(value,"is not numeric"));
         }
         return Collections.emptySet();
     }

@@ -51,18 +51,12 @@ public abstract class CemtexRecord<T extends CemtexRecord<T>> {
         return errors;
     }
 
-    private String toValueString(FieldDefinition field, Object value) {
-        return field.parse(value);
-    }
-
     public String toRecord() {
         StringBuilder sb = new StringBuilder();
         definition.fields.stream().forEachOrdered(field -> {
-            if ("null".equals(field.parse(values.get(field)))) {
-                new Object();
-            } else if (field.parse(values.get(field)) == null) {
-                new Object();
-            }
+            String value = field.parse(values.get(field));
+            if (value == null)
+                throw new NullPointerException();
             sb.append(field.parse(values.get(field)));
         });
         return sb.toString();

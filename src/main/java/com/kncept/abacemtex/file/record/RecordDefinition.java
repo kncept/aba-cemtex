@@ -11,6 +11,7 @@ import static com.kncept.abacemtex.file.field.value.BankMneumonicSqueezer.BANK_S
 import static com.kncept.abacemtex.file.field.value.BlankSqueezer.BLANK_SQUEEZER;
 import static com.kncept.abacemtex.file.field.value.BsbSqueezer.BSB_SQUEEZER;
 import static com.kncept.abacemtex.file.field.value.DateSqueezer.DATE_SQUEEZER;
+import static com.kncept.abacemtex.file.field.value.DefaultValueSqueezer.defaultValueSqueezer;
 import static com.kncept.abacemtex.file.field.value.FixedValueSqueezer.fixedValueSqueezer;
 import static com.kncept.abacemtex.file.field.value.NumericSqueezer.NUMERIC_SQUEEZER;
 import static com.kncept.abacemtex.file.field.value.StringSqueezer.ACCOUNT_STRING_SQUEEZER;
@@ -47,7 +48,7 @@ public class RecordDefinition {
             new FieldDefinition(1, 1, 1, "Record type", NUMERIC, true, fixedValueSqueezer("1")), // Must be '1''
             new FieldDefinition(2, 8, 7, "BSB", ALPHA, true, BSB_SQUEEZER), // Bank/State/Branch number with a hyphen in the 4thcharacter position. e.g. 013-999.
             new FieldDefinition(9, 17, 9, "Account", ALPHA, true, ACCOUNT_STRING_SQUEEZER), // Numeric, alpha, hyphens & blanks are valid.  Right justified, blank filled. Leading zeros that are part of an Account Number must be included.
-            new FieldDefinition(18, 18, 1, "Withholding Tax Indicator", ALPHA,  false, WITHHOLDING_SQUEEZER),
+            new FieldDefinition(18, 18, 1, "Withholding Tax Indicator", ALPHA,  false, defaultValueSqueezer(" ", WITHHOLDING_SQUEEZER)),
             new FieldDefinition(19, 20, 2, "Transaction Code", NUMERIC, true, TX_CODE_SQUEEZER), // Select from the following options as appropriate: 50 General Credit. 53 Payroll. 54 Pension. 56 Dividend. 57 Debenture Interest. 13 General Debit.
             new FieldDefinition(21, 30, 10, "Amount", NUMERIC, true, NUMERIC_SQUEEZER), // Must be greater than zero. Shown in cents without punctuations. Right justified, zero filled. Unsigned
             new FieldDefinition(31, 62, 32, "Account title", ALPHA, true, STRING_SQUEEZER),
@@ -55,7 +56,7 @@ public class RecordDefinition {
             new FieldDefinition(81, 87, 7, "Trace BSB", ALPHA, true, BSB_SQUEEZER), // source bsb
             new FieldDefinition(88, 96, 9, "Trace Account", ALPHA, true, ACCOUNT_STRING_SQUEEZER), // source account number
             new FieldDefinition(97, 112, 16, "Remitter", ALPHA, true, STRING_SQUEEZER), // Produced on the recipient’s Account Statement. "Name of originator of the entry. This may vary from Name of the User. All coded character set valid. Must not contain all blanks. Left justified, blank filled."),
-            new FieldDefinition(113, 120, 8, "Withholding amount", NUMERIC, false, NUMERIC_SQUEEZER) // Amount of Withholding Tax. Numeric only valid. Show in cents without punctuation. Right justified, zero filled. Unsigned.
+            new FieldDefinition(113, 120, 8, "Withholding amount", NUMERIC, false, defaultValueSqueezer(0, NUMERIC_SQUEEZER)) // Amount of Withholding Tax. Numeric only valid. Show in cents without punctuation. Right justified, zero filled. Unsigned.
     });
 
     public static RecordDefinition TYPE_7 = new RecordDefinition(

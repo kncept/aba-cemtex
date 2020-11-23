@@ -64,6 +64,7 @@ public class CemtexFile {
             }
             record.creditTotal(creditTotal);
             record.debitTotal(debitTotal);
+            record.netTotal(Math.abs(creditTotal - debitTotal));
             record.itemCount(file.body.size());
 
             recordBuilder.accept(record);

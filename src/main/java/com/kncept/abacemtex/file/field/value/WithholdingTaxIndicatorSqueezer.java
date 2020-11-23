@@ -21,7 +21,7 @@ public class WithholdingTaxIndicatorSqueezer implements ValueSqueezer {
     public Set<String> validate(FieldDefinition field, Object value) {
         if (value != null && !(value instanceof WithholdingTaxIndicator)) {
             if (WithholdingTaxIndicator.lookup(value.toString()) == null) {
-                return Set.of(field.description + " value " + value + " is not a valid Withholding Tax Indicator");
+                return Set.of(field.validationErrorString(value,"is not a valid Withholding Tax Indicator"));
             }
         }
         return Collections.emptySet();

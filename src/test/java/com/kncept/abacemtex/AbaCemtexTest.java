@@ -2,7 +2,7 @@ package com.kncept.abacemtex;
 
 import org.junit.jupiter.api.Test;
 
-public class AbaCemtexText {
+public class AbaCemtexTest {
 
     @Test
     public void stubTest() {

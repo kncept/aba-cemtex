@@ -24,7 +24,7 @@ public class FixedValueSqueezer implements ValueSqueezer {
 
     @Override
     public Set<String> validate(FieldDefinition field, Object value) {
-        if (value != null) return Set.of(field.description + " must not have any value specified");
+        if (value != null) return Set.of(field.validationErrorString("must not have any value specified"));
         return Collections.emptySet();
     }
 }

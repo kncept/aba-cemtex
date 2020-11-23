@@ -22,7 +22,7 @@ public class BsbSqueezer implements ValueSqueezer {
     public Set<String> validate(FieldDefinition field, Object value) {
         if (value != null) {
             String stringValue = squeeze(field, value);
-            if (!pattern.matcher(stringValue).matches()) return Set.of(field.description + " value " + value + " does not match bsb format 000-000");
+            if (!pattern.matcher(stringValue).matches()) return Set.of(field.validationErrorString(value, "does not match bsb format 000-000"));
         }
         return Collections.emptySet();
     }

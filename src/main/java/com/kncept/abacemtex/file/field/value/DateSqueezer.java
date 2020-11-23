@@ -28,9 +28,9 @@ public class DateSqueezer implements ValueSqueezer {
         if (value != null && !(value instanceof LocalDate))  try {
             LocalDate local = LocalDate.from(dateFormat.parse(value.toString()));
             if (!squeeze(field, local).equals(value.toString()))
-                return Set.of(field.description + " value " + value + " is not a valid DDMMYY date");
+                return Set.of(field.validationErrorString(value, "is not a valid DDMMYY date"));
         } catch (DateTimeParseException e) {
-            return Set.of(field.description + " value " + value + " is not a valid DDMMYY date");
+            return Set.of(field.validationErrorString(value, "is not a valid DDMMYY date"));
         }
         return Collections.emptySet();
     }

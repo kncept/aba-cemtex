@@ -30,9 +30,9 @@ public class TimeSqueezer implements ValueSqueezer {
         if (value != null && !(value instanceof LocalTime))  try {
             LocalTime local = LocalTime.from(dateFormat.parse(value.toString()));
             if (!squeeze(field, local).equals(value.toString()))
-                return Set.of(field.description + " value " + value + " is not a valid HHmm time");
+                return Set.of(field.validationErrorString(value, "is not a valid HHmm time"));
         } catch (DateTimeParseException e) {
-            return Set.of(field.description + " value " + value + " is not a valid HHmm time");
+            return Set.of(field.validationErrorString(value, "is not a valid HHmm time"));
         }
         return Collections.emptySet();
     }

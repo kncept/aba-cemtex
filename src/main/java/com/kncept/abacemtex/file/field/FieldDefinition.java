@@ -38,9 +38,18 @@ public class FieldDefinition {
         Set<String> errors = new HashSet<>();
         errors.addAll(valueSqueezer.validate(this, value));
         String stringValue = parse(value);
-        if (stringValue == null || required && stringValue.isBlank()) return Set.of(description + " has no value");
-        if (!type.isValid(stringValue)) errors.add(description + " value " + value + " not of type " + type.name());
-        if (stringValue.length() != length) errors.add(description + " value " + value + " not of length " + length);
+        if (stringValue == null || required && stringValue.isBlank()) return Set.of(validationErrorString("has no value"));
+        if (!type.isValid(stringValue)) errors.add(validationErrorString(value, "not of type " + type.name()));
+        if (stringValue.length() != length) errors.add(validationErrorString(value, "of length " + stringValue.length() + " not of length " + length));
         return errors;
+    }
+
+    public String validationErrorString(Object value, String message) {
+        if (value == null) return validationErrorString("no value " + message);
+        return validationErrorString("value \"" + value + "\" " + message);
+    }
+
+    public String validationErrorString(String message) {
+        return description + " " + message;
     }
 }
