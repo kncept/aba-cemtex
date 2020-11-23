@@ -1,6 +1,7 @@
 plugins {
     id 'com.kncept.junit.reporter' version '2.0.1'
 	id 'java-library'
+	id 'maven-publish'
 }
 
 group = 'com.kncept'
@@ -39,3 +40,39 @@ dependencies {
 	testImplementation "org.junit.jupiter:junit-jupiter-params:" + junit5version
 	testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:" + junit5version
 }
+
+
+publishing {
+	publications {
+		mavenJava(MavenPublication) {
+			pom {
+				name = 'Kncept Cemtex Aba'
+				description = 'File Format utility for the ABA Cemtex format'
+				url = 'https://github.com/kncept/aba-cemtex'
+				properties = [
+						myProp: "value",
+						"prop.with.dots": "anotherValue"
+				]
+				licenses {
+					license {
+						name = 'MIT License'
+						url = 'https://github.com/kncept/aba-cemtex/blob/main/LICENSE'
+					}
+				}
+				developers {
+					developer {
+						id = 'nkrul'
+						name = 'Nicholas Krul'
+						email = 'nicholas.krul@gmail.com'
+					}
+				}
+				scm {
+					connection = 'scm:git:git://github.com/kncept/aba-cemtex.git'
+					developerConnection = 'scm:git:ssh://github.com/kncept/aba-cemtex.git'
+					url = 'https://github.com/kncept/aba-cemtex'
+				}
+			}
+		}
+	}
+}
+

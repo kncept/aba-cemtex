@@ -14,6 +14,10 @@ Pending release... will go onto maven central looking something like this:
 
 Then use one of the `com.kncept.abacemtex.AbaCemtex.*` methods. It's that easy.
 
+# Publishing
+`./gradlew publishToMavenLocal`
+`./gradlew publish`
+
 ### References
 Breadcrumbs for partial information about file format and bank caveats.
 * https://www.anz.com/Documents/AU/corporate/clientfileformats.pdf
