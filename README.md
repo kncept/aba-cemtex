@@ -10,7 +10,7 @@ I needed an Industrial Grade implementation, so here it is.
 
 # Quickstart
 Use this dependency from maven central.
-    `com.kncept.abacemtex:abacemtex:0.0.1`
+    `com.kncept.abacemtex:aba-cemtex:0.0.1`
 
 Then use one of the `com.kncept.abacemtex.AbaCemtex.*` methods. It's that easy.
 
