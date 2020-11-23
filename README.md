@@ -1,4 +1,4 @@
-# aba-cemtex
+# aba-cemtex [![Build Status](https://travis-ci.org/kncept/aba-cemtex.svg?branch=master)](https://travis-ci.org/kncept/aba-cemtex)
 CemtexABA Library - Australian Bankers Association format
 
 If you require a custom integration, please contact nicholas.krul@gmail.com
