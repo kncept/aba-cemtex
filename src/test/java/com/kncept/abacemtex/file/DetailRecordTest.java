@@ -3,7 +3,7 @@ package com.kncept.abacemtex.file;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
-import java.util.Set;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -20,7 +20,7 @@ public class DetailRecordTest {
                 .remitter("abacemtex-text")
         ;
 
-        Set<String> validationErrors = record.validate();
+        List<String> validationErrors = record.validate();
         assertTrue(validationErrors.isEmpty(), validationErrors.toString());
         String str = record.toRecord();
         assertEquals(120, str.length());

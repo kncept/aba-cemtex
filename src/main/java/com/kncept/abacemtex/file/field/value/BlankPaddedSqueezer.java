@@ -3,8 +3,7 @@ package com.kncept.abacemtex.file.field.value;
 import com.kncept.abacemtex.file.field.FieldDefinition;
 import com.kncept.abacemtex.utils.StringUtils;
 
-import java.util.Collections;
-import java.util.Set;
+import java.util.List;
 
 public class BlankPaddedSqueezer implements ValueSqueezer {
 
@@ -35,7 +34,7 @@ public class BlankPaddedSqueezer implements ValueSqueezer {
     }
 
     @Override
-    public Set<String> validate(FieldDefinition field, Object value) {
+    public List<String> validate(FieldDefinition field, Object value) {
         return squeezer.validate(field, value);
     }
 }

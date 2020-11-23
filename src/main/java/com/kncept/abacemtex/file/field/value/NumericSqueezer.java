@@ -1,10 +1,9 @@
 package com.kncept.abacemtex.file.field.value;
 
 import com.kncept.abacemtex.file.field.FieldDefinition;
-import com.kncept.abacemtex.utils.StringUtils;
 
 import java.util.Collections;
-import java.util.Set;
+import java.util.List;
 import java.util.regex.Pattern;
 
 import static com.kncept.abacemtex.file.field.value.BlankPaddedSqueezer.leftPadded;
@@ -24,11 +23,11 @@ public class NumericSqueezer implements ValueSqueezer {
     }
 
     @Override
-    public Set<String> validate(FieldDefinition field, Object value) {
+    public List<String> validate(FieldDefinition field, Object value) {
         if (value != null) {
             String stringValue = squeeze(field, value);
-            if (!pattern.matcher(stringValue).matches()) return Set.of(field.validationErrorString(value,"is not numeric"));
+            if (!pattern.matcher(stringValue).matches()) return List.of(field.validationErrorString(value,"is not numeric"));
         }
-        return Collections.emptySet();
+        return Collections.emptyList();
     }
 }

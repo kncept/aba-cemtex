@@ -2,7 +2,7 @@ package com.kncept.abacemtex.file;
 
 import org.junit.jupiter.api.Test;
 
-import java.util.Set;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -18,7 +18,7 @@ public class FooterlRecordTest {
                 .itemCount(1)
         ;
 
-        Set<String> validationErrors = record.validate();
+        List<String> validationErrors = record.validate();
         assertTrue(validationErrors.isEmpty(), validationErrors.toString());
         String str = record.toRecord();
         assertEquals(120, str.length());

@@ -4,7 +4,7 @@ import com.kncept.abacemtex.file.field.FieldDefinition;
 import com.kncept.abacemtex.file.record.TransactionCode;
 
 import java.util.Collections;
-import java.util.Set;
+import java.util.List;
 
 public class TransactionCodeSqueezer implements ValueSqueezer {
 
@@ -18,12 +18,12 @@ public class TransactionCodeSqueezer implements ValueSqueezer {
     }
 
     @Override
-    public Set<String> validate(FieldDefinition field, Object value) {
+    public List<String> validate(FieldDefinition field, Object value) {
         if (value != null && !(value instanceof TransactionCode)) {
             if (TransactionCode.lookup(value.toString()) == null) {
-                return Set.of(field.validationErrorString(value,"is not a valid Transaction Code"));
+                return List.of(field.validationErrorString(value,"is not a valid Transaction Code"));
             }
         }
-        return Collections.emptySet();
+        return Collections.emptyList();
     }
 }

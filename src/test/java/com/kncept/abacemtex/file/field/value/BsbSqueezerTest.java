@@ -4,10 +4,11 @@ import com.kncept.abacemtex.file.field.FieldDefinition;
 import com.kncept.abacemtex.file.field.FieldType;
 import org.junit.jupiter.api.Test;
 
-import java.util.Set;
+import java.util.List;
 
 import static com.kncept.abacemtex.file.field.value.BsbSqueezer.BSB_SQUEEZER;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class BsbSqueezerTest {
 
@@ -23,13 +24,15 @@ public class BsbSqueezerTest {
     }
 
     @Test
-    public void ignoresNullValues() {
+    public void ignoresNullAndEmptyValues() {
         assertNoErrors(null);
+        assertNoErrors("");
+        assertNoErrors(" ");
+        assertNoErrors("       ");
     }
 
     @Test
     public void invaldBadBsb() {
-        assertFormatError("");
         assertFormatError(new Object());
         assertFormatError("123456");
         assertFormatError(123456);
@@ -38,17 +41,12 @@ public class BsbSqueezerTest {
     }
 
     public void assertNoErrors(Object value) {
-        Set<String> validationErrors = squeezer.validate(field, value);
+        List<String> validationErrors = squeezer.validate(field, value);
         assertTrue(validationErrors.isEmpty(), validationErrors.toString());
-        if (value != null) {
-            String stringValue = squeezer.squeeze(field, value);
-            assertNotNull(stringValue);
-            assertFalse(stringValue.isBlank());
-        }
     }
 
     public void assertFormatError(Object value) {
-        Set<String> validationErrors = squeezer.validate(field, value);
+        List<String> validationErrors = squeezer.validate(field, value);
         assertFalse(validationErrors.isEmpty(), validationErrors.toString());
     }
 }

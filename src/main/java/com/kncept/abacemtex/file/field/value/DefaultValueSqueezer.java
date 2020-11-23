@@ -2,7 +2,7 @@ package com.kncept.abacemtex.file.field.value;
 
 import com.kncept.abacemtex.file.field.FieldDefinition;
 
-import java.util.Set;
+import java.util.List;
 
 public class DefaultValueSqueezer implements ValueSqueezer {
 
@@ -29,7 +29,7 @@ public class DefaultValueSqueezer implements ValueSqueezer {
     }
 
     @Override
-    public Set<String> validate(FieldDefinition field, Object value) {
+    public List<String> validate(FieldDefinition field, Object value) {
         return squeezer.validate(field, value(value));
     }
 }

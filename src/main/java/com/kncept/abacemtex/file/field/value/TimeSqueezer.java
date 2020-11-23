@@ -1,14 +1,12 @@
 package com.kncept.abacemtex.file.field.value;
 
 import com.kncept.abacemtex.file.field.FieldDefinition;
-import com.kncept.abacemtex.utils.StringUtils;
 
-import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Collections;
-import java.util.Set;
+import java.util.List;
 
 public class TimeSqueezer implements ValueSqueezer {
 
@@ -18,7 +16,7 @@ public class TimeSqueezer implements ValueSqueezer {
 
     @Override
     public String squeeze(FieldDefinition field, Object value) {
-        if (value == null) return "    ";
+        if (value == null) return null;
         if (value instanceof LocalTime) {
             return ((LocalTime) value).format(dateFormat);
         }
@@ -26,14 +24,16 @@ public class TimeSqueezer implements ValueSqueezer {
     }
 
     @Override
-    public Set<String> validate(FieldDefinition field, Object value) {
-        if (value != null && !(value instanceof LocalTime))  try {
+    public List<String> validate(FieldDefinition field, Object value) {
+        if (value instanceof LocalTime) return Collections.emptyList();
+        String stringValue = squeeze(field, value);
+        if (value != null && !stringValue.isBlank()) try {
             LocalTime local = LocalTime.from(dateFormat.parse(value.toString()));
             if (!squeeze(field, local).equals(value.toString()))
-                return Set.of(field.validationErrorString(value, "is not a valid HHmm time"));
+                return List.of(field.validationErrorString(value, "is not a valid HHmm time"));
         } catch (DateTimeParseException e) {
-            return Set.of(field.validationErrorString(value, "is not a valid HHmm time"));
+            return List.of(field.validationErrorString(value, "is not a valid HHmm time"));
         }
-        return Collections.emptySet();
+        return Collections.emptyList();
     }
 }

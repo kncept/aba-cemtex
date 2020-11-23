@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.Set;
+import java.util.List;
 
 import static com.kncept.abacemtex.file.field.value.DateSqueezer.DATE_SQUEEZER;
 import static org.junit.jupiter.api.Assertions.*;
@@ -49,7 +49,7 @@ public class DateSqueezerTest {
     }
 
     public void assertNoErrors(Object value) {
-        Set<String> validationErrors = squeezer.validate(field, value);
+        List<String> validationErrors = squeezer.validate(field, value);
         assertTrue(validationErrors.isEmpty(), validationErrors.toString());
         if (value != null) {
             String stringValue = squeezer.squeeze(field, value);
@@ -59,7 +59,7 @@ public class DateSqueezerTest {
     }
 
     public void assertFormatError(Object value) {
-        Set<String> validationErrors = squeezer.validate(field, value);
+        List<String> validationErrors = squeezer.validate(field, value);
         assertFalse(validationErrors.isEmpty(), validationErrors.toString());
     }
 }

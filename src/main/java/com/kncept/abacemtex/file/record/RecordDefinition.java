@@ -1,9 +1,13 @@
 package com.kncept.abacemtex.file.record;
 
+import com.kncept.abacemtex.file.DetailRecord;
+import com.kncept.abacemtex.file.FooterRecord;
+import com.kncept.abacemtex.file.HeaderRecord;
 import com.kncept.abacemtex.file.field.FieldDefinition;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Supplier;
 
 import static com.kncept.abacemtex.file.field.FieldType.ALPHA;
 import static com.kncept.abacemtex.file.field.FieldType.NUMERIC;
@@ -20,14 +24,8 @@ import static com.kncept.abacemtex.file.field.value.TimeSqueezer.TIME_SQUEEZER;
 import static com.kncept.abacemtex.file.field.value.TransactionCodeSqueezer.TX_CODE_SQUEEZER;
 import static com.kncept.abacemtex.file.field.value.WithholdingTaxIndicatorSqueezer.WITHHOLDING_SQUEEZER;
 
-/**
- * Sources for field definitions include:
- * https://www.anz.com/Documents/AU/corporate/clientfileformats.pdf
- * https://www.cemtexaba.com/aba-format/cemtex-aba-file-format-details
- */
-public class RecordDefinition {
-    public static RecordDefinition TYPE_0 = new RecordDefinition(
-            "Descriptive Record", 0, new FieldDefinition[]{
+public enum RecordDefinition {
+    TYPE_0("Descriptive Record", 0, () -> new HeaderRecord(), new FieldDefinition[]{
             new FieldDefinition(1, 1, 1, "Record type", NUMERIC, true, fixedValueSqueezer("0")), // Must be '0'
             new FieldDefinition(2, 8, 7, "BSB", ALPHA, false, BSB_SQUEEZER), // Bank/State/Branch number of the funds account with a hyphen in the 4th character position. e.g. 013-999.
             new FieldDefinition(9, 17, 9, "Account", ALPHA, false, ACCOUNT_STRING_SQUEEZER), // Funds account number
@@ -41,10 +39,8 @@ public class RecordDefinition {
             new FieldDefinition(75, 80, 6, "Date to be processed", ALPHA, true, DATE_SQUEEZER), // Date on which the payment is to be processed. DDMMYY (e.g. 010111).
             new FieldDefinition(81, 84, 4, "Time to be processed", ALPHA, false, TIME_SQUEEZER), // Time on which the payment is to be processed. 24 hour format -  HHmm
             new FieldDefinition(85, 120, 36, "Reserved", ALPHA, false, BLANK_SQUEEZER), // Must be blank filled.
-    });
-
-    public static RecordDefinition TYPE_1 = new RecordDefinition(
-            "Detail Record", 1, new FieldDefinition[]{
+    }),
+    TYPE_1("Detail Record", 1, () -> new DetailRecord(), new FieldDefinition[]{
             new FieldDefinition(1, 1, 1, "Record type", NUMERIC, true, fixedValueSqueezer("1")), // Must be '1''
             new FieldDefinition(2, 8, 7, "BSB", ALPHA, true, BSB_SQUEEZER), // Bank/State/Branch number with a hyphen in the 4thcharacter position. e.g. 013-999.
             new FieldDefinition(9, 17, 9, "Account", ALPHA, true, ACCOUNT_STRING_SQUEEZER), // Numeric, alpha, hyphens & blanks are valid.  Right justified, blank filled. Leading zeros that are part of an Account Number must be included.
@@ -57,10 +53,8 @@ public class RecordDefinition {
             new FieldDefinition(88, 96, 9, "Trace Account", ALPHA, true, ACCOUNT_STRING_SQUEEZER), // source account number
             new FieldDefinition(97, 112, 16, "Remitter", ALPHA, true, STRING_SQUEEZER), // Produced on the recipient’s Account Statement. "Name of originator of the entry. This may vary from Name of the User. All coded character set valid. Must not contain all blanks. Left justified, blank filled."),
             new FieldDefinition(113, 120, 8, "Withholding amount", NUMERIC, false, defaultValueSqueezer(0, NUMERIC_SQUEEZER)) // Amount of Withholding Tax. Numeric only valid. Show in cents without punctuation. Right justified, zero filled. Unsigned.
-    });
-
-    public static RecordDefinition TYPE_7 = new RecordDefinition(
-            "Batch Control Record ", 7, new FieldDefinition[]{
+    }),
+    TYPE_7("Batch Control Record ", 7, () -> new FooterRecord(), new FieldDefinition[]{
             new FieldDefinition(1, 1, 1, "Record type", NUMERIC, true, fixedValueSqueezer("7")), //"Must be '7'
             new FieldDefinition(2, 8, 7, "Reserved", ALPHA, true, fixedValueSqueezer("999-999")), // Must be '999-999'
             new FieldDefinition(9, 20, 12, "Reserved", ALPHA, false, BLANK_SQUEEZER), // Must be blank filled.
@@ -74,10 +68,25 @@ public class RecordDefinition {
 
     public final String name;
     public final int type;
+    private final Supplier<CemtexRecord> factory;
     public final List<FieldDefinition> fields;
-    public RecordDefinition(String name, int type, FieldDefinition[] fields) {
+    RecordDefinition(String name, int type, Supplier<CemtexRecord> factory, FieldDefinition[] fields) {
         this.name = name;
         this.type = type;
+        this.factory = factory;
         this.fields = Arrays.asList(fields);
+    }
+    public CemtexRecord newRecord() {
+        return factory.get();
+    }
+
+    public static CemtexRecord recordBuilderForPrefix(String line) {
+        if(line == null) return null;
+        for(RecordDefinition rd: RecordDefinition.values()) {
+            if (line.startsWith(Integer.toString(rd.type))) {
+                return rd.newRecord();
+            }
+        }
+        return null;
     }
 }

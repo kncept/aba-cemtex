@@ -4,19 +4,44 @@ import com.kncept.abacemtex.file.record.CemtexRecord;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
 
 public class CemtexFile {
-    HeaderRecord header;
-    List<DetailRecord> body = new ArrayList<>();
-    FooterRecord footer;
+    public static final String lineDelimiter = "\r\n"; // the old CrLf
+    public HeaderRecord header;
+    public final List<DetailRecord> body = new ArrayList<>();
+    public FooterRecord footer;
+
+    public CemtexFile() {}
 
     public static Builder builder(Consumer<HeaderRecord> recordBuilder) {
         return new Builder(recordBuilder, true);
     }
     public static Builder builderWithNoValidation(Consumer<HeaderRecord> recordBuilder) {
         return new Builder(recordBuilder, false);
+    }
+
+    public List<String> validate() {
+        final List<String> errors = new ArrayList<>();
+        if (header != null) errors.addAll(applyPrefix("Line 0 ", header.validate()));
+        for(int i = 0; i < body.size(); i++) {
+            errors.addAll(applyPrefix("Line " + (i + 1) + " ", body.get(i).validate()));
+        }
+        if (footer != null) errors.addAll(applyPrefix("Line " + (body.size() + 1) + " ", footer.validate()));
+        return errors;
+    }
+
+    private List<String> applyPrefix(String prefix, List<String> errors) {
+        return errors.stream().map(it -> prefix + it).collect(Collectors.toList());
+    }
+
+    public List<String> toRecords() {
+        List<String> records = new ArrayList<>();
+        if (header != null) records.add(header.toRecord());
+        records.addAll(body.stream().map(CemtexRecord::toRecord).collect(Collectors.toList()));
+        if (footer != null) records.add(footer.toRecord());
+        return records;
     }
 
     public static class Builder {
@@ -68,7 +93,6 @@ public class CemtexFile {
             record.itemCount(file.body.size());
 
             recordBuilder.accept(record);
-            validate(record);
             if (validation) validate(record);
             file.footer = record;
             return file;
@@ -79,11 +103,13 @@ public class CemtexFile {
         }
 
         private void validate(CemtexRecord record) {
-            Set<String> validationErrors = record.validate();
+            List<String> validationErrors = record.validate();
             if (!validationErrors.isEmpty())
                 throw new IllegalStateException("Validation Error: " + validationErrors.toString());
         }
+
+        public List<String> validate() {
+            return file.validate();
+        }
     }
-
-
 }

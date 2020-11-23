@@ -1,9 +1,10 @@
 package com.kncept.abacemtex.file;
 
+import com.kncept.abacemtex.file.field.FieldDefinition;
 import com.kncept.abacemtex.file.record.CemtexRecord;
 import com.kncept.abacemtex.file.record.RecordDefinition;
 
-import java.util.Set;
+import java.util.List;
 
 public class FooterRecord extends CemtexRecord<FooterRecord> {
     private final static class keys {
@@ -32,13 +33,19 @@ public class FooterRecord extends CemtexRecord<FooterRecord> {
         return value(keys.itemCount, total);
     }
 
-    public Set<String> validate() {
-        Set<String> errors = super.validate();
-        Long netTotal = (Long)getValue(keys.netTotal);
-        Long creditTotal = (Long)getValue(keys.creditTotal);
-        Long debitTotal = (Long)getValue(keys.debitTotal);
+    public List<String> validate() {
+        List<String> errors = super.validate();
+        Long netTotal = getFieldValueAsLong(keys.netTotal);
+        Long creditTotal = getFieldValueAsLong(keys.creditTotal);
+        Long debitTotal = getFieldValueAsLong(keys.debitTotal);
         if (netTotal.longValue() != Math.abs(creditTotal - debitTotal)) errors.add("Net Total not correctly calculated");
         return errors;
+    }
+
+    private long getFieldValueAsLong(String fieldName) {
+        FieldDefinition field = fieldDefinition(fieldName);
+        String valueAsString = field.parse(getValue(field));
+        return Long.parseLong(valueAsString);
     }
 
 

@@ -3,7 +3,7 @@ package com.kncept.abacemtex.file.field.value;
 import com.kncept.abacemtex.file.field.FieldDefinition;
 
 import java.util.Collections;
-import java.util.Set;
+import java.util.List;
 
 public class FixedValueSqueezer implements ValueSqueezer {
 
@@ -11,20 +11,20 @@ public class FixedValueSqueezer implements ValueSqueezer {
         return new FixedValueSqueezer(value);
     }
 
-    private final String value;
+    private final String fixedValue;
 
     public FixedValueSqueezer(String value) {
-        this.value = value;
+        this.fixedValue = value;
     }
 
     @Override
     public String squeeze(FieldDefinition field, Object value) {
-        return this.value;
+        return fixedValue;
     }
 
     @Override
-    public Set<String> validate(FieldDefinition field, Object value) {
-        if (value != null) return Set.of(field.validationErrorString("must not have any value specified"));
-        return Collections.emptySet();
+    public List<String> validate(FieldDefinition field, Object value) {
+        if (value != null && !fixedValue.equals(value)) return List.of(field.validationErrorString("must not have any value specified"));
+        return Collections.emptyList();
     }
 }

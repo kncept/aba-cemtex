@@ -3,7 +3,7 @@ package com.kncept.abacemtex.file;
 import com.kncept.abacemtex.file.field.BankMnemonic;
 import org.junit.jupiter.api.Test;
 
-import java.util.Set;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -19,7 +19,7 @@ public class HeaderRecordTest {
         .dateToBeProcessed("231120")
         ;
 
-        Set<String> validationErrors = record.validate();
+        List<String> validationErrors = record.validate();
         assertTrue(validationErrors.isEmpty(), validationErrors.toString());
         String str = record.toRecord();
         assertEquals(120, str.length());

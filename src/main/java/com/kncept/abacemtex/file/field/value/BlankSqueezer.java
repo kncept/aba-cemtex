@@ -4,7 +4,7 @@ import com.kncept.abacemtex.file.field.FieldDefinition;
 import com.kncept.abacemtex.utils.StringUtils;
 
 import java.util.Collections;
-import java.util.Set;
+import java.util.List;
 
 public class BlankSqueezer implements ValueSqueezer {
 
@@ -16,8 +16,8 @@ public class BlankSqueezer implements ValueSqueezer {
     }
 
     @Override
-    public Set<String> validate(FieldDefinition field, Object value) {
-        if (value != null) return Set.of(field.validationErrorString("must not have any value specified"));
-        return Collections.emptySet();
+    public List<String> validate(FieldDefinition field, Object value) {
+        if (value != null && value instanceof String && !((String) value).isBlank()) return List.of(field.validationErrorString("must not have any value specified"));
+        return Collections.emptyList();
     }
 }

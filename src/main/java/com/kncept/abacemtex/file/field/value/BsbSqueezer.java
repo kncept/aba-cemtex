@@ -3,7 +3,7 @@ package com.kncept.abacemtex.file.field.value;
 import com.kncept.abacemtex.file.field.FieldDefinition;
 
 import java.util.Collections;
-import java.util.Set;
+import java.util.List;
 import java.util.regex.Pattern;
 
 public class BsbSqueezer implements ValueSqueezer {
@@ -14,16 +14,16 @@ public class BsbSqueezer implements ValueSqueezer {
 
     @Override
     public String squeeze(FieldDefinition field, Object value) {
-        if (value == null) return "       ";
+        if (value == null) return null;
         return value.toString();
     }
 
     @Override
-    public Set<String> validate(FieldDefinition field, Object value) {
-        if (value != null) {
-            String stringValue = squeeze(field, value);
-            if (!pattern.matcher(stringValue).matches()) return Set.of(field.validationErrorString(value, "does not match bsb format 000-000"));
+    public List<String> validate(FieldDefinition field, Object value) {
+        String stringValue = squeeze(field, value);
+        if (stringValue != null && !stringValue.isBlank()) {
+            if (!pattern.matcher(stringValue).matches()) return List.of(field.validationErrorString(value, "does not match bsb format 000-000"));
         }
-        return Collections.emptySet();
+        return Collections.emptyList();
     }
 }

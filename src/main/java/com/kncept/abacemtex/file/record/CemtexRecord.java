@@ -2,10 +2,7 @@ package com.kncept.abacemtex.file.record;
 
 import com.kncept.abacemtex.file.field.FieldDefinition;
 
-import java.util.HashMap;
-import java.util.LinkedHashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public abstract class CemtexRecord<T extends CemtexRecord<T>> {
@@ -44,8 +41,8 @@ public abstract class CemtexRecord<T extends CemtexRecord<T>> {
         return values.get(field);
     }
 
-    public Set<String> validate() {
-        final Set<String> errors = new LinkedHashSet<>();
+    public List<String> validate() {
+        final List<String> errors = new ArrayList<>();
         definition.fields.stream()
             .forEachOrdered(field -> errors.addAll(field.validate(values.get(field))));
         return errors;

@@ -9,10 +9,11 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.Set;
+import java.util.List;
 
 import static com.kncept.abacemtex.file.field.value.TimeSqueezer.TIME_SQUEEZER;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class TimeSqueezerTest {
     ValueSqueezer squeezer = TIME_SQUEEZER;
@@ -27,16 +28,18 @@ public class TimeSqueezerTest {
 
     @Test
     public void invalidStringTimes() {
-        assertFormatError("");
         assertFormatError("2400");
         assertFormatError("000");
-
+        assertFormatError("01:17");
     }
 
     @Test
-    public void validLocalDates() {
+    public void validLocalTimes() {
         assertNoErrors(LocalTime.now());
         assertNoErrors(null);
+        assertNoErrors("");
+        assertNoErrors(" ");
+        assertNoErrors("    ");
     }
 
     @Test
@@ -50,17 +53,12 @@ public class TimeSqueezerTest {
     }
 
     public void assertNoErrors(Object value) {
-        Set<String> validationErrors = squeezer.validate(field, value);
+        List<String> validationErrors = squeezer.validate(field, value);
         assertTrue(validationErrors.isEmpty(), validationErrors.toString());
-        if (value != null) {
-            String stringValue = squeezer.squeeze(field, value);
-            assertNotNull(stringValue);
-            assertFalse(stringValue.isBlank());
-        }
     }
 
     public void assertFormatError(Object value) {
-        Set<String> validationErrors = squeezer.validate(field, value);
+        List<String> validationErrors = squeezer.validate(field, value);
         assertFalse(validationErrors.isEmpty(), validationErrors.toString());
     }
 }

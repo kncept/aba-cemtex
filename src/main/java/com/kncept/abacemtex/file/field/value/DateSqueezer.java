@@ -6,7 +6,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Collections;
-import java.util.Set;
+import java.util.List;
 
 public class DateSqueezer implements ValueSqueezer {
 
@@ -24,14 +24,14 @@ public class DateSqueezer implements ValueSqueezer {
     }
 
     @Override
-    public Set<String> validate(FieldDefinition field, Object value) {
+    public List<String> validate(FieldDefinition field, Object value) {
         if (value != null && !(value instanceof LocalDate))  try {
             LocalDate local = LocalDate.from(dateFormat.parse(value.toString()));
             if (!squeeze(field, local).equals(value.toString()))
-                return Set.of(field.validationErrorString(value, "is not a valid DDMMYY date"));
+                return List.of(field.validationErrorString(value, "is not a valid DDMMYY date"));
         } catch (DateTimeParseException e) {
-            return Set.of(field.validationErrorString(value, "is not a valid DDMMYY date"));
+            return List.of(field.validationErrorString(value, "is not a valid DDMMYY date"));
         }
-        return Collections.emptySet();
+        return Collections.emptyList();
     }
 }

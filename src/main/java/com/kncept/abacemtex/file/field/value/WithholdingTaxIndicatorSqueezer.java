@@ -4,7 +4,7 @@ import com.kncept.abacemtex.file.field.FieldDefinition;
 import com.kncept.abacemtex.file.record.WithholdingTaxIndicator;
 
 import java.util.Collections;
-import java.util.Set;
+import java.util.List;
 
 public class WithholdingTaxIndicatorSqueezer implements ValueSqueezer {
 
@@ -18,12 +18,12 @@ public class WithholdingTaxIndicatorSqueezer implements ValueSqueezer {
     }
 
     @Override
-    public Set<String> validate(FieldDefinition field, Object value) {
+    public List<String> validate(FieldDefinition field, Object value) {
         if (value != null && !(value instanceof WithholdingTaxIndicator)) {
             if (WithholdingTaxIndicator.lookup(value.toString()) == null) {
-                return Set.of(field.validationErrorString(value,"is not a valid Withholding Tax Indicator"));
+                return List.of(field.validationErrorString(value,"is not a valid Withholding Tax Indicator"));
             }
         }
-        return Collections.emptySet();
+        return Collections.emptyList();
     }
 }

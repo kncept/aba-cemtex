@@ -3,7 +3,7 @@ package com.kncept.abacemtex.file.field.value;
 import com.kncept.abacemtex.file.field.FieldDefinition;
 
 import java.util.Collections;
-import java.util.Set;
+import java.util.List;
 
 import static com.kncept.abacemtex.file.field.value.BlankPaddedSqueezer.leftPadded;
 import static com.kncept.abacemtex.file.field.value.BlankPaddedSqueezer.rightPadded;
@@ -15,12 +15,12 @@ public class StringSqueezer implements ValueSqueezer {
 
     @Override
     public String squeeze(FieldDefinition field, Object value) {
-        if (value == null) return "";
+        if (value == null) return null;
         return value.toString();
     }
 
     @Override
-    public Set<String> validate(FieldDefinition field, Object value) {
-        return Collections.emptySet();
+    public List<String> validate(FieldDefinition field, Object value) {
+        return Collections.emptyList();
     }
 }

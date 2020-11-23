@@ -1,9 +1,10 @@
 package com.kncept.abacemtex.file.field;
 
 import com.kncept.abacemtex.file.field.value.ValueSqueezer;
+import com.kncept.abacemtex.utils.StringUtils;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 public class FieldDefinition {
     public final int startPos, endPos, length;
@@ -31,14 +32,18 @@ public class FieldDefinition {
     }
 
     public String parse(Object value) {
-        return valueSqueezer.squeeze(this, value);
+        String stringValue = valueSqueezer.squeeze(this, value);
+        if (stringValue == null && !required) {
+            return StringUtils.padding(type == FieldType.ALPHA ? " " : "0", length);
+        }
+        return stringValue;
     }
 
-    public Set<String> validate(Object value) {
-        Set<String> errors = new HashSet<>();
+    public List<String> validate(Object value) {
+        List<String> errors = new ArrayList<>();
         errors.addAll(valueSqueezer.validate(this, value));
         String stringValue = parse(value);
-        if (stringValue == null || required && stringValue.isBlank()) return Set.of(validationErrorString("has no value"));
+        if (stringValue == null || required && stringValue.isBlank()) return List.of(validationErrorString("has no value"));
         if (!type.isValid(stringValue)) errors.add(validationErrorString(value, "not of type " + type.name()));
         if (stringValue.length() != length) errors.add(validationErrorString(value, "of length " + stringValue.length() + " not of length " + length));
         return errors;

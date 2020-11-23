@@ -4,7 +4,7 @@ import com.kncept.abacemtex.file.field.BankMnemonic;
 import com.kncept.abacemtex.file.field.FieldDefinition;
 
 import java.util.Collections;
-import java.util.Set;
+import java.util.List;
 
 public class BankMneumonicSqueezer implements ValueSqueezer {
 
@@ -18,7 +18,7 @@ public class BankMneumonicSqueezer implements ValueSqueezer {
     }
 
     @Override
-    public Set<String> validate(FieldDefinition field, Object value) {
-        return Collections.emptySet();
+    public List<String> validate(FieldDefinition field, Object value) {
+        return Collections.emptyList();
     }
 }
