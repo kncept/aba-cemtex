@@ -9,8 +9,8 @@ Not only that, but the implementation typically involves long, undelimited strin
 I needed an Industrial Grade implementation, so here it is.
 
 # Quickstart
-Pending release... will go onto maven central looking something like this:
-    `com.kncept.abacemtex:abacemtex:1.0.0`
+Use this dependency from maven central.
+    `com.kncept.abacemtex:abacemtex:0.0.1`
 
 Then use one of the `com.kncept.abacemtex.AbaCemtex.*` methods. It's that easy.
 
