@@ -1,4 +1,4 @@
-# aba-cemtex [![Build Status](https://travis-ci.org/kncept/aba-cemtex.svg?branch=master)](https://travis-ci.org/kncept/aba-cemtex)
+# aba-cemtex
 CemtexABA Library - Australian Bankers Association format
 
 If you require a custom integration, please contact nicholas.krul@gmail.com
@@ -10,7 +10,7 @@ I needed an Industrial Grade implementation, so here it is.
 
 # Quickstart
 Use this dependency from maven central.
-    `com.kncept.abacemtex:aba-cemtex:0.0.1`
+    `com.kncept.abacemtex:aba-cemtex:0.0.2`
 
 Then use one of the `com.kncept.abacemtex.AbaCemtex.*` methods. It's that easy.
 

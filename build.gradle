@@ -7,7 +7,7 @@ plugins {
 
 group = 'com.kncept.abacemtex'
 // 'snapshot' versions may not be released to OSSRH
-version = '0.0.2-SNAPSHOT'
+version = '0.0.2'
 sourceCompatibility = 14
 targetCompatibility = 14
 description = """
@@ -58,6 +58,7 @@ String publishPassword = project.hasProperty('ossrhPassword') ? ossrhPassword : 
 publishing {
 	publications {
 		mavenJava(MavenPublication) {
+			from components.java
 			pom {
 				name = 'Kncept Cemtex Aba'
 				description = 'File Format utility for the ABA Cemtex format'
