@@ -18,12 +18,11 @@ Includes builders, parsers and validation.
 def junit5version = '5.7.0'
 
 junitHtmlReport {
-	failOnEmpty = false
+	failOnEmpty = true
 }
 
 repositories {
 	mavenLocal() // ./m2/repositories
-//	maven { url 'https://repo.spring.io/libs-release'}
 	mavenCentral()
 	jcenter()
 }
@@ -65,7 +64,7 @@ publishing {
 				url = 'https://github.com/kncept/aba-cemtex'
 				properties = [
 						myProp: "value",
-						"prop.with.dots": "anotherValue"
+						"corporate.website": "kncept.com"
 				]
 				licenses {
 					license {

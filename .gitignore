@@ -1,6 +1,12 @@
 .gradle/
+
 .idea/
 build/
+
+.classpath
+.project
+.settings/
+bin/
 
 gradle.properties
 secring.gpg

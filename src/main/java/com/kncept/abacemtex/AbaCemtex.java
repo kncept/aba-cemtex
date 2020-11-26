@@ -9,7 +9,8 @@ import java.io.InputStream;
 import java.util.List;
 import java.util.function.Consumer;
 
-public class AbaCemtex {
+public final class AbaCemtex {
+	private AbaCemtex() {}
 
     public static Parser parser(InputStream in) throws IOException {
         return new Parser(in);
