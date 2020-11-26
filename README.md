@@ -25,8 +25,3 @@ Breadcrumbs for partial information about file format and bank caveats.
 * https://www.cemtexaba.com/aba-format/cemtex-aba-file-format-details
 * http://tom0wu.blogspot.com/2014/05/australia-banks-integrate-with-aba-file.html
 * https://www.commbank.com.au/support.digital-banking.importing-files-into-netbank.html
-
-### verification tools
-Either test data was sourced from here, or a provided 'validation tool' was used to validate output
-* https://www.cemtexaba.com/
-* http://callidex.com/?p=162
