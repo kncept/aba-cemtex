@@ -19,7 +19,7 @@ public final class AbaCemtex {
         return new Parser(in);
     }
 
-    public CemtexFile.Builder builder(Consumer<HeaderRecord> recordBuilder) {
+    public static CemtexFile.Builder builder(Consumer<HeaderRecord> recordBuilder) {
         return CemtexFile.builder(recordBuilder);
     }
 

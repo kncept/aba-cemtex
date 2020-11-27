@@ -2,6 +2,7 @@ package com.kncept.abacemtex.file;
 
 import com.kncept.abacemtex.file.record.CemtexRecord;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
@@ -15,6 +16,9 @@ public class CemtexFile {
 
     public CemtexFile() {}
 
+    public static InitialBuilder initialBuilder() {
+        return new InitialBuilder();
+    }
     public static Builder builder(Consumer<HeaderRecord> recordBuilder) {
         return new Builder(recordBuilder, true);
     }
@@ -22,6 +26,10 @@ public class CemtexFile {
         return new Builder(recordBuilder, false);
     }
 
+    /**
+     * performs validations at the file level.
+     * @return a list of all validation errors.
+     */
     public List<String> validate() {
         final List<String> errors = new ArrayList<>();
         if (header != null) errors.addAll(applyPrefix("Line 0 ", header.validate()));
@@ -29,6 +37,7 @@ public class CemtexFile {
             errors.addAll(applyPrefix("Line " + (i + 1) + " ", body.get(i).validate()));
         }
         if (footer != null) errors.addAll(applyPrefix("Line " + (body.size() + 1) + " ", footer.validate()));
+        // TODO: Add amount total validation
         return errors;
     }
 
@@ -42,6 +51,29 @@ public class CemtexFile {
         records.addAll(body.stream().map(CemtexRecord::toRecord).collect(Collectors.toList()));
         if (footer != null) records.add(footer.toRecord());
         return records;
+    }
+
+    public String toFileString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(header.toRecord());
+        sb.append(lineDelimiter);
+        for(DetailRecord record: body) {
+            sb.append(record.toRecord());
+            sb.append(lineDelimiter);
+        }
+        sb.append(footer.toRecord());
+        sb.append(lineDelimiter);
+        return sb.toString();
+    }
+
+    public byte[] toFileBytes() throws UnsupportedEncodingException {
+        return toFileString().getBytes("US-ASCII");
+    }
+
+    public static class InitialBuilder {
+        private static Builder header(Consumer<HeaderRecord> recordBuilder) {
+            return new Builder(recordBuilder, true);
+        }
     }
 
     public static class Builder {
@@ -58,7 +90,6 @@ public class CemtexFile {
 
         public Builder record(Consumer<DetailRecord> recordBuilder) {
             DetailRecord record = new DetailRecord();
-
             //precalculate values where possible
 
             //if set, this will carry them forwards
