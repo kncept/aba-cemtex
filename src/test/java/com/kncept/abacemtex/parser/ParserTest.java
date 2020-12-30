@@ -4,6 +4,9 @@ import com.kncept.abacemtex.AbaCemtex;
 import com.kncept.abacemtex.file.CemtexFile;
 import com.kncept.abacemtex.utils.StringUtils;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -17,12 +20,13 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ParserTest {
 
-    @Test
-    public void parseTestFile() throws IOException  {
+    @ParameterizedTest
+    @ValueSource(strings = {"/sample_aba.txt", "/nab_sample_aba.txt"})
+    public void parseTestFile(String fileName) throws IOException  {
         // Test file from https://www.cemtexaba.com/aba-format
         InputStream in = null;
         try{
-            in = getClass().getResourceAsStream("/sample_aba.txt");
+            in = getClass().getResourceAsStream(fileName);
             CemtexFile file = AbaCemtex.parser(in).cemtexFile();
             List<String> validationErrors = file.validate();
             assertTrue(validationErrors.isEmpty(), validationErrors.toString());
@@ -33,12 +37,13 @@ public class ParserTest {
         }
     }
 
-    @Test
-    public void reconstituteTestFile() throws IOException  {
+    @ParameterizedTest
+    @ValueSource(strings = {"/sample_aba.txt", "/nab_sample_aba.txt"})
+    public void reconstituteTestFile(String fileName) throws IOException  {
         List<String> lines = new ArrayList<>();
         InputStream in = null;
         try{
-            in = getClass().getResourceAsStream("/sample_aba.txt");
+            in = getClass().getResourceAsStream(fileName);
             BufferedReader bIn = new BufferedReader(new InputStreamReader(in));
             String line = bIn.readLine();
             while (line != null) {

@@ -12,7 +12,6 @@ public class HeaderRecordTest {
     @Test
     public void canBuildBasicRecord() {
         HeaderRecord record = new HeaderRecord()
-
         .financialInstitution(BankMnemonic.CommonwealthBankAustralia)
         .orgUserName("My Account Name")
         .description("Test File")
@@ -32,6 +31,19 @@ public class HeaderRecordTest {
         assertNull(record.getValue("User Identification number"));
         record.financialInstitution(BankMnemonic.CommonwealthBankAustralia);
         assertEquals(record.getValue("User Identification number"), "0000");
+    }
 
+    @Test
+    public void orgAccount() {
+        HeaderRecord record = new HeaderRecord()
+                .orgAccount("123-456", "12345678")
+                .financialInstitution(BankMnemonic.NationalAustraliaBank)
+                .orgUserId("000000")
+                .orgUserName("My Account Name")
+                .description("Test File")
+                .dateToBeProcessed("231120");
+
+        List<String> validationErrors = record.validate();
+        assertTrue(validationErrors.isEmpty(), validationErrors.toString());
     }
 }
