@@ -21,11 +21,10 @@ public class HeaderRecord extends CemtexRecord<HeaderRecord> {
         if (knownBank != null) return financialInstitution(knownBank);
         return value("Name of User Financial Institution", bankMnemonic);
     }
+
     public HeaderRecord financialInstitution(BankMnemonic bankMnemonic) {
-        if (bankMnemonic == BankMnemonic.CommonwealthBankAustralia) {
-            orgUserId("0000");
-        }
-        return value("Name of User Financial Institution", bankMnemonic);
+        if (bankMnemonic != null) bankMnemonic.onMneumonicSet(this);
+        return value(fieldDefinition("Name of User Financial Institution"), bankMnemonic);
     }
 
     public HeaderRecord orgUserName(String userName) {
@@ -41,13 +40,14 @@ public class HeaderRecord extends CemtexRecord<HeaderRecord> {
     }
 
     public HeaderRecord dateToBeProcessed(LocalDate date) {
-        return value("Date to be processed", date);
+        return value(fieldDefinition("Date to be processed"), date);
     }
+
     public HeaderRecord dateToBeProcessed(String date) {
         return value("Date to be processed", date);
     }
 
     public HeaderRecord timeToBeProcessed(LocalTime time) {
-        return value("Time to be processed", time);
+        return value(fieldDefinition("Time to be processed"), time);
     }
 }

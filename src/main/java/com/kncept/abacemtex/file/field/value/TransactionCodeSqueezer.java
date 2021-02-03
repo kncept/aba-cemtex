@@ -26,4 +26,9 @@ public class TransactionCodeSqueezer implements ValueSqueezer {
         }
         return Collections.emptyList();
     }
+
+    @Override
+    public TransactionCode identify(FieldDefinition field, String value) {
+        return TransactionCode.lookup(value);
+    }
 }

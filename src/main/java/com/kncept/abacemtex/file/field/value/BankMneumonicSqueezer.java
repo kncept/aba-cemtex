@@ -13,12 +13,17 @@ public class BankMneumonicSqueezer implements ValueSqueezer {
     @Override
     public String squeeze(FieldDefinition field, Object value) {
         if (value == null) return null;
-        if (value instanceof BankMnemonic) return ((BankMnemonic) value).id;
+        if (value instanceof BankMnemonic) return ((BankMnemonic) value).getMneumonic();
         return value.toString();
     }
 
     @Override
     public List<String> validate(FieldDefinition field, Object value) {
         return Collections.emptyList();
+    }
+
+    @Override
+    public Object identify(FieldDefinition field, String value) {
+        return BankMnemonic.lookup(value);
     }
 }

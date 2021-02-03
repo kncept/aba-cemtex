@@ -34,4 +34,10 @@ public class DateSqueezer implements ValueSqueezer {
         }
         return Collections.emptyList();
     }
+
+    @Override
+    public LocalDate identify(FieldDefinition field, String value) {
+        if (value == null) return null;
+        return LocalDate.parse(value, dateFormat);
+    }
 }

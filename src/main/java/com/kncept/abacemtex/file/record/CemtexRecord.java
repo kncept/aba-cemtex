@@ -20,8 +20,9 @@ public abstract class CemtexRecord<T extends CemtexRecord<T>> {
         if (found.size() > 1) throw new IllegalStateException("Multiple \"" + name + "\" in " + definition.name + " definition");
         return found.iterator().next();
     }
-    public T value(String fieldName, Object value) {
-        return value(fieldDefinition(fieldName), value);
+    public T value(String fieldName, String value) {
+        FieldDefinition field = fieldDefinition(fieldName);
+        return value(field, field.identify(value));
     }
     public T value(FieldDefinition field, Object value) {
         if (!definition.fields.contains(field)) throw new IllegalStateException("Field not part of " + definition.name + " definition");
@@ -33,8 +34,9 @@ public abstract class CemtexRecord<T extends CemtexRecord<T>> {
         return (T) this;
     }
 
-    public Object getValue(String fieldName) {
-        return getValue(fieldDefinition(fieldName));
+    public String getValue(String fieldName) {
+        FieldDefinition field = fieldDefinition(fieldName);
+        return field.parse(getValue(field));
     }
     public Object getValue(FieldDefinition field) {
         if (!definition.fields.contains(field)) throw new IllegalStateException("Field not part of " + definition.name + " definition");

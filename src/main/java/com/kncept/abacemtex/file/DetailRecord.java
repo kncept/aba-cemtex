@@ -5,6 +5,7 @@ import com.kncept.abacemtex.file.record.CemtexRecord;
 import com.kncept.abacemtex.file.record.RecordDefinition;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 
 public class DetailRecord extends CemtexRecord<DetailRecord> {
     public DetailRecord() {
@@ -19,7 +20,9 @@ public class DetailRecord extends CemtexRecord<DetailRecord> {
      * @return
      */
     public DetailRecord participantAccount(String bsb, String accountNumber, String accountName) {
-        return value("BSB", bsb).value("Account", accountNumber).value("Account title", accountName);
+        return value("BSB", bsb)
+                .value("Account", accountNumber)
+                .value("Account title", accountName);
     }
 
     /**
@@ -29,7 +32,7 @@ public class DetailRecord extends CemtexRecord<DetailRecord> {
      * @return
      */
     public DetailRecord transactionCode(TransactionCode code) {
-        return value("Transaction Code", code);
+        return value(fieldDefinition("Transaction Code"), code);
     }
 
     /**
@@ -38,7 +41,16 @@ public class DetailRecord extends CemtexRecord<DetailRecord> {
      * @return
      */
     public DetailRecord amount(long amountInCents) {
-        return value("Amount", amountInCents);
+        return amount(BigInteger.valueOf(amountInCents));
+    }
+
+    /**
+     * The magnitude of the amount to transfer, in cents.
+     * @param amountInCents
+     * @return
+     */
+    public DetailRecord amount(BigInteger amountInCents) {
+        return value(fieldDefinition("Amount"), amountInCents);
     }
 
     /**
@@ -52,7 +64,7 @@ public class DetailRecord extends CemtexRecord<DetailRecord> {
     }
 
     public boolean isOutbound() {
-        TransactionCode transactionCode = (TransactionCode) getValue("Transaction Code");
+        TransactionCode transactionCode = (TransactionCode) getValue(fieldDefinition("Transaction Code"));
         if (transactionCode == null) throw new IllegalStateException("No direction yet set");
         return transactionCode.isOutbound();
     }

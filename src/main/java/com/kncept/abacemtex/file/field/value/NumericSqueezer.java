@@ -2,6 +2,7 @@ package com.kncept.abacemtex.file.field.value;
 
 import com.kncept.abacemtex.file.field.FieldDefinition;
 
+import java.math.BigInteger;
 import java.util.Collections;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -29,5 +30,11 @@ public class NumericSqueezer implements ValueSqueezer {
             if (!pattern.matcher(stringValue).matches()) return List.of(field.validationErrorString(value,"is not numeric"));
         }
         return Collections.emptyList();
+    }
+
+    @Override
+    public BigInteger identify(FieldDefinition field, String value) {
+        if (value == null) return null;
+        return new BigInteger(value);
     }
 }

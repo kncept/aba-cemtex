@@ -1,10 +1,11 @@
 package com.kncept.abacemtex.file;
 
-import com.kncept.abacemtex.file.field.BankMnemonic;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
+import static com.kncept.abacemtex.file.field.BankMnemonics.CommonwealthBankAustralia;
+import static com.kncept.abacemtex.file.field.BankMnemonics.NationalAustraliaBank;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class HeaderRecordTest {
@@ -12,7 +13,7 @@ public class HeaderRecordTest {
     @Test
     public void canBuildBasicRecord() {
         HeaderRecord record = new HeaderRecord()
-        .financialInstitution(BankMnemonic.CommonwealthBankAustralia)
+        .financialInstitution(CommonwealthBankAustralia)
         .orgUserName("My Account Name")
         .description("Test File")
         .dateToBeProcessed("231120")
@@ -29,15 +30,15 @@ public class HeaderRecordTest {
     public void cbaAutoPopulatesBankUserId() {
         HeaderRecord record = new HeaderRecord();
         assertNull(record.getValue("User Identification number"));
-        record.financialInstitution(BankMnemonic.CommonwealthBankAustralia);
-        assertEquals(record.getValue("User Identification number"), "0000");
+        record.financialInstitution(CommonwealthBankAustralia);
+        assertEquals(record.getValue("User Identification number"), "000000");
     }
 
     @Test
     public void orgAccount() {
         HeaderRecord record = new HeaderRecord()
                 .orgAccount("123-456", "12345678")
-                .financialInstitution(BankMnemonic.NationalAustraliaBank)
+                .financialInstitution(NationalAustraliaBank)
                 .orgUserId("000000")
                 .orgUserName("My Account Name")
                 .description("Test File")

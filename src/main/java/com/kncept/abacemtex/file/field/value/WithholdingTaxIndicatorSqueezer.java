@@ -26,4 +26,9 @@ public class WithholdingTaxIndicatorSqueezer implements ValueSqueezer {
         }
         return Collections.emptyList();
     }
+
+    @Override
+    public WithholdingTaxIndicator identify(FieldDefinition field, String value) {
+        return WithholdingTaxIndicator.lookup(value);
+    }
 }

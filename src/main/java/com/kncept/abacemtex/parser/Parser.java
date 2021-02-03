@@ -43,7 +43,8 @@ public class Parser {
         if (line.length() < 120) line = line + StringUtils.blankString(120 - line.length());
         for(FieldDefinition field: record.definition.fields) {
             String subLine = line.substring(field.startPos - 1, field.endPos);
-            record.value(field, subLine);
+            Object fieldValue = field.identify(subLine);
+            record.value(field, fieldValue);
         }
     }
 

@@ -36,4 +36,10 @@ public class TimeSqueezer implements ValueSqueezer {
         }
         return Collections.emptyList();
     }
+
+    @Override
+    public LocalTime identify(FieldDefinition field, String value) {
+        if (value == null || value.isBlank()) return null;
+        return LocalTime.parse(value, dateFormat);
+    }
 }

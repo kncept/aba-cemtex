@@ -11,7 +11,7 @@ public class FieldDefinition {
     public final String description;
     public final FieldType type;
     public final boolean required;
-    private final ValueSqueezer valueSqueezer;
+    private final ValueSqueezer valueSqueezer; // squeeze to a NICE STRING value
 
     public FieldDefinition(
             int startPos,
@@ -47,6 +47,10 @@ public class FieldDefinition {
         if (!type.isValid(stringValue)) errors.add(validationErrorString(value, "not of type " + type.name()));
         if (stringValue.length() != length) errors.add(validationErrorString(value, "of length " + stringValue.length() + " not of length " + length));
         return errors;
+    }
+
+    public Object identify(String value) {
+        return valueSqueezer.identify(this, value);
     }
 
     public String validationErrorString(Object value, String message) {

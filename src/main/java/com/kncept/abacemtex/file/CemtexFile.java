@@ -3,6 +3,7 @@ package com.kncept.abacemtex.file;
 import com.kncept.abacemtex.file.record.CemtexRecord;
 
 import java.io.UnsupportedEncodingException;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
@@ -104,14 +105,14 @@ public class CemtexFile {
             return this;
         }
 
-        public CemtexFile build(Consumer<FooterRecord> recordBuilder) {
+        public static FooterRecord generateFooterRecord(List<DetailRecord> body){
             FooterRecord record = new FooterRecord();
 
             long debitTotal = 0;
             long creditTotal = 0;
 
-            for(DetailRecord detail: file.body) {
-                long amount = (Long)detail.getValue("Amount");
+            for(DetailRecord detail: body) {
+                long amount = ((BigInteger)detail.getValue(detail.fieldDefinition("Amount"))).longValue();
                 if (detail.isOutbound()) {
                     creditTotal += amount;
                 } else {
@@ -121,8 +122,12 @@ public class CemtexFile {
             record.creditTotal(creditTotal);
             record.debitTotal(debitTotal);
             record.netTotal(Math.abs(creditTotal - debitTotal));
-            record.itemCount(file.body.size());
+            record.itemCount(body.size());
+            return record;
+        }
 
+        public CemtexFile build(Consumer<FooterRecord> recordBuilder) {
+            FooterRecord record = generateFooterRecord(file.body);
             recordBuilder.accept(record);
             if (validation) validate(record);
             file.footer = record;

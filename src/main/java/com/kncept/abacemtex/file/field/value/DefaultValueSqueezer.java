@@ -32,4 +32,9 @@ public class DefaultValueSqueezer implements ValueSqueezer {
     public List<String> validate(FieldDefinition field, Object value) {
         return squeezer.validate(field, value(value));
     }
+
+    @Override
+    public Object identify(FieldDefinition field, String value) {
+        return squeezer.identify(field, value);
+    }
 }

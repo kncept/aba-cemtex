@@ -18,19 +18,19 @@ public class FooterRecord extends CemtexRecord<FooterRecord> {
     }
 
     FooterRecord netTotal(long total) {
-        return value(keys.netTotal, total);
+        return value(fieldDefinition(keys.netTotal), total);
     }
 
     FooterRecord creditTotal(long total) {
-        return value(keys.creditTotal, total);
+        return value(fieldDefinition(keys.creditTotal), total);
     }
 
     FooterRecord debitTotal(long total) {
-        return value(keys.debitTotal, total);
+        return value(fieldDefinition(keys.debitTotal), total);
     }
 
     FooterRecord itemCount(int total) {
-        return value(keys.itemCount, total);
+        return value(fieldDefinition(keys.itemCount), total);
     }
 
     public List<String> validate() {

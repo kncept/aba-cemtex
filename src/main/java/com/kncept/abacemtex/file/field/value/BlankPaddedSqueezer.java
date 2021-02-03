@@ -37,4 +37,17 @@ public class BlankPaddedSqueezer implements ValueSqueezer {
     public List<String> validate(FieldDefinition field, Object value) {
         return squeezer.validate(field, value);
     }
+
+    @Override
+    public Object identify(FieldDefinition field, String value) {
+        if (value == null) return null;
+        if (leftPadded) {
+            while (value.startsWith(" "))
+                value = value.substring(1);
+        } else {
+            while (value.endsWith(" "))
+                value = value.substring(0, value.length() - 1);
+        }
+        return squeezer.identify(field, value);
+    }
 }
