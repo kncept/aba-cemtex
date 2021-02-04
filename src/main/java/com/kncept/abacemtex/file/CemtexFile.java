@@ -67,8 +67,12 @@ public class CemtexFile {
         return sb.toString();
     }
 
-    public byte[] toFileBytes() throws UnsupportedEncodingException {
-        return toFileString().getBytes("US-ASCII");
+    public byte[] toFileBytes() {
+        try {
+            return toFileString().getBytes("US-ASCII");
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public static class InitialBuilder {

@@ -7,8 +7,9 @@ plugins {
 
 group = 'com.kncept.abacemtex'
 // 'snapshot' versions may not be released to OSSRH
-// use `publishToMavenLocal` 
-version = '0.0.4-SNAPSHOT'
+// use `publishToMavenLocal` for local :)
+// use `publish` for ossrh
+version = '0.0.5-SNAPSHOT'
 sourceCompatibility = 14
 targetCompatibility = 14
 description = """
@@ -65,7 +66,7 @@ publishing {
 				url = 'https://github.com/kncept/aba-cemtex'
 				properties = [
 						myProp: "value",
-						"corporate.website": "kncept.com"
+						"corporate.website": "http://kncept.com"
 				]
 				licenses {
 					license {
