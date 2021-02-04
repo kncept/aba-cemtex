@@ -17,9 +17,7 @@ public class HeaderRecord extends CemtexRecord<HeaderRecord> {
     }
 
     public HeaderRecord financialInstitution(String bankMnemonic) {
-        BankMnemonic knownBank = BankMnemonic.lookup(bankMnemonic);
-        if (knownBank != null) return financialInstitution(knownBank);
-        return value("Name of User Financial Institution", bankMnemonic);
+        return financialInstitution(BankMnemonic.lookup(bankMnemonic));
     }
 
     public HeaderRecord financialInstitution(BankMnemonic bankMnemonic) {
