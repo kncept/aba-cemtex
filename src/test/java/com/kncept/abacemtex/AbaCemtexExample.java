@@ -2,7 +2,7 @@ package com.kncept.abacemtex;
 
 import com.kncept.abacemtex.file.CemtexFile;
 import com.kncept.abacemtex.file.DetailRecord;
-import org.junit.jupiter.api.Test;
+import com.kncept.abacemtex.file.compactor.SimpleCompactor;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -10,8 +10,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
-
-import static com.kncept.abacemtex.file.CemtexFile.Builder.generateFooterRecord;
 
 /**
  * This example was used to patch an aba file<br/>
@@ -26,7 +24,7 @@ public class AbaCemtexExample {
     }
 
     public void fixPayRun() throws IOException {
-        String dir = ".";
+        String dir = "";
         File f = new File(dir, "2020-12-PayRun.aba");
 
         CemtexFile cemtexFile = AbaCemtex.parser(new FileInputStream(f)).cemtexFile();
@@ -34,8 +32,10 @@ public class AbaCemtexExample {
         outputFileDetails(cemtexFile);
 
         // BSB & Account fields are optional.
+        // could be extracted from 'trace' values in detail records
 //        cemtexFile.header.value("BSB", "XXX-XXX");
 //        cemtexFile.header.value("Account", "XXXX");
+
         cemtexFile.header.value(cemtexFile.header.fieldDefinition("Date to be processed"), LocalDate.now());
 
         for(DetailRecord record: new ArrayList<>(cemtexFile.body)) {
@@ -46,8 +46,9 @@ public class AbaCemtexExample {
                 cemtexFile.body.remove(record);
             }
         }
+//        cemtexFile.footer = generateFooterRecord(cemtexFile.body);
 
-        cemtexFile.footer = generateFooterRecord(cemtexFile.body);
+        cemtexFile = cemtexFile.compact(new SimpleCompactor());
 
         System.out.println("\nMassaged file:");
         outputFileDetails(cemtexFile);
@@ -68,7 +69,7 @@ public class AbaCemtexExample {
         System.out.println("Date to be processed:" + cemtexFile.header.getValue("Date to be processed"));
 
         for(DetailRecord record: cemtexFile.body) {
-            System.out.println((record.isOutbound() ? "outbound" : "inbound") + " " + record.getValue("Amount") + " cents" +
+            System.out.println((record.isOutbound() ? "outbound" : "inbound ") + " " + record.getValue("Amount") + " cents" +
                     " " + record.getValue("BSB") + " " + record.getValue("Account") + " " + record.getValue("Account title") +
                     " TRACE " + record.getValue("Trace BSB") + " " + record.getValue("Trace Account")
             );

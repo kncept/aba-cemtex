@@ -14,11 +14,8 @@ public abstract class CemtexRecord<T extends CemtexRecord<T>> {
         values = new HashMap<>();
     }
 
-    public FieldDefinition fieldDefinition(String name) {
-        Set<FieldDefinition> found = definition.fields.stream().filter(field -> field.description.equals(name)).collect(Collectors.toSet());
-        if (found.isEmpty()) throw new IllegalStateException("Field \"" + name + "\" not part of " + definition.name + " definition");
-        if (found.size() > 1) throw new IllegalStateException("Multiple \"" + name + "\" in " + definition.name + " definition");
-        return found.iterator().next();
+    public FieldDefinition fieldDefinition(String fieldName) {
+        return definition.fieldDefinition(fieldName);
     }
     public T value(String fieldName, String value) {
         FieldDefinition field = fieldDefinition(fieldName);

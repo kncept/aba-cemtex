@@ -7,7 +7,9 @@ import com.kncept.abacemtex.file.field.FieldDefinition;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 import static com.kncept.abacemtex.file.field.FieldType.ALPHA;
 import static com.kncept.abacemtex.file.field.FieldType.NUMERIC;
@@ -88,5 +90,13 @@ public enum RecordDefinition {
             }
         }
         return null;
+    }
+
+    public FieldDefinition fieldDefinition(String fieldName) {
+        return fields
+                .stream()
+                .filter(field -> field.description.equals(fieldName))
+                .findAny()
+                .orElseThrow(() -> new IllegalStateException("Field \"" + fieldName + "\" not part of " + name + " definition"));
     }
 }

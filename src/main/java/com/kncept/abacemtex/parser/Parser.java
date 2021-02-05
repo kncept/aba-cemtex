@@ -39,7 +39,7 @@ public class Parser {
         return this;
     }
 
-    private void fill(CemtexRecord record, String line) {
+    public static void fill(CemtexRecord record, String line) {
         if (line.length() < 120) line = line + StringUtils.blankString(120 - line.length());
         for(FieldDefinition field: record.definition.fields) {
             String subLine = line.substring(field.startPos - 1, field.endPos);
@@ -50,9 +50,8 @@ public class Parser {
 
     public List<String> validate() {
         List<String> errors = new ArrayList<>();
-        for(int i = 0; i < records.size(); i++) {
-            // TODO.....................................
-        }
+        for(CemtexRecord record: records)
+            errors.addAll(record.validate());
         return errors;
     }
 

@@ -9,7 +9,7 @@ group = 'com.kncept.abacemtex'
 // 'snapshot' versions may not be released to OSSRH
 // use `publishToMavenLocal` for local :)
 // use `publish` for ossrh
-version = '0.0.5-SNAPSHOT'
+version = '0.0.6-SNAPSHOT'
 sourceCompatibility = 14
 targetCompatibility = 14
 description = """

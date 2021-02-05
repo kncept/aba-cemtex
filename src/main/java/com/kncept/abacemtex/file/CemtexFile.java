@@ -1,13 +1,16 @@
 package com.kncept.abacemtex.file;
 
+import com.kncept.abacemtex.file.compactor.Compactor;
 import com.kncept.abacemtex.file.record.CemtexRecord;
+import com.kncept.abacemtex.parser.Parser;
 
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
+
+import static java.util.Comparator.comparing;
 
 public class CemtexFile {
     public static final String lineDelimiter = "\r\n"; // the old CrLf
@@ -73,6 +76,24 @@ public class CemtexFile {
         } catch (UnsupportedEncodingException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public CemtexFile compact(Compactor compactor) {
+        CemtexFile file = new Parser(toRecords()).cemtexFile();
+        file.doCompact(compactor);
+        return file;
+    }
+
+    private void doCompact(Compactor compactor) {
+        LinkedHashMap<String, List<DetailRecord>> compactionGrouops = new LinkedHashMap<>();
+        for(DetailRecord record: body) {
+            List<DetailRecord> records = compactionGrouops.computeIfAbsent(compactor.compactionKey(record), key -> new ArrayList<>());
+            records.add(record);
+        }
+        body.clear();
+        for(List<DetailRecord> matchedRecords: compactionGrouops.values())
+            body.add(compactor.compact(matchedRecords));
+        footer = Builder.generateFooterRecord(body);
     }
 
     public static class InitialBuilder {
