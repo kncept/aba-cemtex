@@ -1,12 +1,12 @@
-package com.kncept.abacemtex.file.field.value;
+package com.kncept.abacemtex.file.field.valuesqueezer;
 
 import com.kncept.abacemtex.file.field.FieldDefinition;
 
 import java.util.Collections;
 import java.util.List;
 
-import static com.kncept.abacemtex.file.field.value.BlankPaddedSqueezer.leftPadded;
-import static com.kncept.abacemtex.file.field.value.BlankPaddedSqueezer.rightPadded;
+import static com.kncept.abacemtex.file.field.valuesqueezer.BlankPaddedSqueezer.leftPadded;
+import static com.kncept.abacemtex.file.field.valuesqueezer.BlankPaddedSqueezer.rightPadded;
 
 public class StringSqueezer implements ValueSqueezer {
 

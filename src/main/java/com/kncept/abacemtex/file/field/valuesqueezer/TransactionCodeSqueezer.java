@@ -1,7 +1,7 @@
-package com.kncept.abacemtex.file.field.value;
+package com.kncept.abacemtex.file.field.valuesqueezer;
 
 import com.kncept.abacemtex.file.field.FieldDefinition;
-import com.kncept.abacemtex.file.record.TransactionCode;
+import com.kncept.abacemtex.file.field.value.transactioncode.TransactionCode;
 
 import java.util.Collections;
 import java.util.List;

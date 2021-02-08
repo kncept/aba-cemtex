@@ -1,6 +1,6 @@
-package com.kncept.abacemtex.file.field.value;
+package com.kncept.abacemtex.file.field.valuesqueezer;
 
-import com.kncept.abacemtex.file.field.BankMnemonic;
+import com.kncept.abacemtex.file.field.value.bankmneumonic.BankMnemonic;
 import com.kncept.abacemtex.file.field.FieldDefinition;
 
 import java.util.Collections;

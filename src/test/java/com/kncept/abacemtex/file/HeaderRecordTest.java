@@ -4,8 +4,8 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static com.kncept.abacemtex.file.field.BankMnemonics.CommonwealthBankAustralia;
-import static com.kncept.abacemtex.file.field.BankMnemonics.NationalAustraliaBank;
+import static com.kncept.abacemtex.file.field.value.bankmneumonic.BankMnemonics.CommonwealthBankAustralia;
+import static com.kncept.abacemtex.file.field.value.bankmneumonic.BankMnemonics.NationalAustraliaBank;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class HeaderRecordTest {

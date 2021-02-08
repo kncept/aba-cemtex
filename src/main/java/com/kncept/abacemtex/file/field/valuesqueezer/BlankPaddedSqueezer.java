@@ -1,4 +1,4 @@
-package com.kncept.abacemtex.file.field.value;
+package com.kncept.abacemtex.file.field.valuesqueezer;
 
 import com.kncept.abacemtex.file.field.FieldDefinition;
 import com.kncept.abacemtex.utils.StringUtils;

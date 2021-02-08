@@ -1,9 +1,6 @@
-package com.kncept.abacemtex.file.field;
+package com.kncept.abacemtex.file.field.value.bankmneumonic;
 
 import com.kncept.abacemtex.file.HeaderRecord;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public enum BankMnemonics implements BankMnemonic {
     AustraliaNewZealandBank("ANZ"),
@@ -31,9 +28,13 @@ public enum BankMnemonics implements BankMnemonic {
 
     @Override
     public void onMneumonicSet(HeaderRecord headerRecord) {
-        // CBA has a 'default' org user id of "0000" - in a 6 digit field.
-        if (this == CommonwealthBankAustralia) {
-            headerRecord.orgUserId("0");
+        // Entries we know have a default org user id of "000000"
+        if (
+                this == CommonwealthBankAustralia ||
+                this == NationalAustraliaBank ||
+                this == WestpacBankingCorporation
+        ) {
+            headerRecord.orgUserId("000000");
         }
     }
 }

@@ -1,7 +1,7 @@
-package com.kncept.abacemtex.file.field.value;
+package com.kncept.abacemtex.file.field.valuesqueezer;
 
 import com.kncept.abacemtex.file.field.FieldDefinition;
-import com.kncept.abacemtex.file.record.WithholdingTaxIndicator;
+import com.kncept.abacemtex.file.field.value.withholdingtax.WithholdingTaxIndicator;
 
 import java.util.Collections;
 import java.util.List;

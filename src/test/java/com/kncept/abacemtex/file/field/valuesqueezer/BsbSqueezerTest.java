@@ -1,4 +1,4 @@
-package com.kncept.abacemtex.file.field.value;
+package com.kncept.abacemtex.file.field.valuesqueezer;
 
 import com.kncept.abacemtex.file.field.FieldDefinition;
 import com.kncept.abacemtex.file.field.FieldType;
@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static com.kncept.abacemtex.file.field.value.BsbSqueezer.BSB_SQUEEZER;
+import static com.kncept.abacemtex.file.field.valuesqueezer.BsbSqueezer.BSB_SQUEEZER;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 

@@ -1,6 +1,6 @@
 package com.kncept.abacemtex.file.field;
 
-import com.kncept.abacemtex.file.field.value.ValueSqueezer;
+import com.kncept.abacemtex.file.field.valuesqueezer.ValueSqueezer;
 import com.kncept.abacemtex.utils.StringUtils;
 
 import java.util.ArrayList;

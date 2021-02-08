@@ -1,7 +1,7 @@
 # aba-cemtex
 CemtexABA Library - Australian Bankers Association format
 
-If you require a custom integration, please contact nicholas.krul@gmail.com
+If you require a custom integration, or a support contract please contact nicholas.krul@gmail.com
 
 # Why?
 I've worked with these files many times, and every single company has a different 'standards free' implementation.
@@ -10,7 +10,7 @@ I needed an Industrial Grade implementation, so here it is.
 
 # Quickstart
 Use this dependency from maven central.
-    `com.kncept.abacemtex:aba-cemtex:0.0.2`
+    `com.kncept.abacemtex:aba-cemtex:1.0.0`
 
 Then use one of the `com.kncept.abacemtex.AbaCemtex.*` methods. It's that easy.
 

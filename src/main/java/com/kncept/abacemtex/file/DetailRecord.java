@@ -1,6 +1,6 @@
 package com.kncept.abacemtex.file;
 
-import com.kncept.abacemtex.file.record.TransactionCode;
+import com.kncept.abacemtex.file.field.value.transactioncode.TransactionCode;
 import com.kncept.abacemtex.file.record.CemtexRecord;
 import com.kncept.abacemtex.file.record.RecordDefinition;
 

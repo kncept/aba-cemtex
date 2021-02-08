@@ -1,4 +1,4 @@
-package com.kncept.abacemtex.file.field;
+package com.kncept.abacemtex.file.field.value.bankmneumonic;
 
 import com.kncept.abacemtex.file.HeaderRecord;
 

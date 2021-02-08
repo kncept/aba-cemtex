@@ -1,4 +1,4 @@
-package com.kncept.abacemtex.file.record;
+package com.kncept.abacemtex.file.field.value.transactioncode;
 
 /**
  * 13 (General Debit - inbound to org) and 50 (General Credit - outbound from org) are likely to be your most common use case

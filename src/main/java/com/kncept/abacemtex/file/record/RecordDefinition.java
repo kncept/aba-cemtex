@@ -7,24 +7,22 @@ import com.kncept.abacemtex.file.field.FieldDefinition;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
 import java.util.function.Supplier;
-import java.util.stream.Collectors;
 
 import static com.kncept.abacemtex.file.field.FieldType.ALPHA;
 import static com.kncept.abacemtex.file.field.FieldType.NUMERIC;
-import static com.kncept.abacemtex.file.field.value.BankMneumonicSqueezer.BANK_SQUEEZER;
-import static com.kncept.abacemtex.file.field.value.BlankSqueezer.BLANK_SQUEEZER;
-import static com.kncept.abacemtex.file.field.value.BsbSqueezer.BSB_SQUEEZER;
-import static com.kncept.abacemtex.file.field.value.DateSqueezer.DATE_SQUEEZER;
-import static com.kncept.abacemtex.file.field.value.DefaultValueSqueezer.defaultValueSqueezer;
-import static com.kncept.abacemtex.file.field.value.FixedValueSqueezer.fixedValueSqueezer;
-import static com.kncept.abacemtex.file.field.value.NumericSqueezer.NUMERIC_SQUEEZER;
-import static com.kncept.abacemtex.file.field.value.StringSqueezer.ACCOUNT_STRING_SQUEEZER;
-import static com.kncept.abacemtex.file.field.value.StringSqueezer.STRING_SQUEEZER;
-import static com.kncept.abacemtex.file.field.value.TimeSqueezer.TIME_SQUEEZER;
-import static com.kncept.abacemtex.file.field.value.TransactionCodeSqueezer.TX_CODE_SQUEEZER;
-import static com.kncept.abacemtex.file.field.value.WithholdingTaxIndicatorSqueezer.WITHHOLDING_SQUEEZER;
+import static com.kncept.abacemtex.file.field.valuesqueezer.BankMneumonicSqueezer.BANK_SQUEEZER;
+import static com.kncept.abacemtex.file.field.valuesqueezer.BlankSqueezer.BLANK_SQUEEZER;
+import static com.kncept.abacemtex.file.field.valuesqueezer.BsbSqueezer.BSB_SQUEEZER;
+import static com.kncept.abacemtex.file.field.valuesqueezer.DateSqueezer.DATE_SQUEEZER;
+import static com.kncept.abacemtex.file.field.valuesqueezer.DefaultValueSqueezer.defaultValueSqueezer;
+import static com.kncept.abacemtex.file.field.valuesqueezer.FixedValueSqueezer.fixedValueSqueezer;
+import static com.kncept.abacemtex.file.field.valuesqueezer.NumericSqueezer.NUMERIC_SQUEEZER;
+import static com.kncept.abacemtex.file.field.valuesqueezer.StringSqueezer.ACCOUNT_STRING_SQUEEZER;
+import static com.kncept.abacemtex.file.field.valuesqueezer.StringSqueezer.STRING_SQUEEZER;
+import static com.kncept.abacemtex.file.field.valuesqueezer.TimeSqueezer.TIME_SQUEEZER;
+import static com.kncept.abacemtex.file.field.valuesqueezer.TransactionCodeSqueezer.TX_CODE_SQUEEZER;
+import static com.kncept.abacemtex.file.field.valuesqueezer.WithholdingTaxIndicatorSqueezer.WITHHOLDING_SQUEEZER;
 
 public enum RecordDefinition {
     TYPE_0("Descriptive Record", 0, () -> new HeaderRecord(), new FieldDefinition[]{

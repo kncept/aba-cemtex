@@ -3,7 +3,7 @@ package com.kncept.abacemtex.file.compactor;
 import com.kncept.abacemtex.file.DetailRecord;
 import com.kncept.abacemtex.file.field.FieldDefinition;
 import com.kncept.abacemtex.file.record.RecordDefinition;
-import com.kncept.abacemtex.file.record.TransactionCode;
+import com.kncept.abacemtex.file.field.value.transactioncode.TransactionCode;
 
 import java.math.BigInteger;
 import java.util.HashMap;
