@@ -11,7 +11,7 @@ import static com.kncept.abacemtex.file.field.valuesqueezer.BlankPaddedSqueezer.
 
 public class NumericSqueezer implements ValueSqueezer {
 
-    public static ValueSqueezer NUMERIC_SQUEEZER = leftPadded("0", new NumericSqueezer());
+    public static final ValueSqueezer NUMERIC_SQUEEZER = leftPadded("0", new NumericSqueezer());
 
     private Pattern pattern = Pattern.compile("\\d+");
 

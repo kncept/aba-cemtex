@@ -54,11 +54,10 @@ public class AbaCemtexExample {
         outputFileDetails(cemtexFile);
         File outFile = new File(dir, "2020-12-NewPayRun.aba");
         if (outFile.exists())
-            outFile.delete();
-        FileOutputStream fOs = new FileOutputStream(outFile);
-        fOs.write(cemtexFile.toFileBytes());
-        fOs.flush();
-        fOs.close();
+            if (!outFile.delete()) System.err.println("error deleting existing output file " + outFile.getName());
+        try (FileOutputStream fOs = new FileOutputStream(outFile)) {
+            fOs.write(cemtexFile.toFileBytes());
+        }
     }
 
     public void outputFileDetails(CemtexFile cemtexFile) {

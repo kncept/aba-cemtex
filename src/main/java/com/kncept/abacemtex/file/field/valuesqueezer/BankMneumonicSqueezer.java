@@ -8,7 +8,7 @@ import java.util.List;
 
 public class BankMneumonicSqueezer implements ValueSqueezer {
 
-    public static BankMneumonicSqueezer BANK_SQUEEZER = new BankMneumonicSqueezer();
+    public static final BankMneumonicSqueezer BANK_SQUEEZER = new BankMneumonicSqueezer();
 
     @Override
     public String squeeze(FieldDefinition field, Object value) {

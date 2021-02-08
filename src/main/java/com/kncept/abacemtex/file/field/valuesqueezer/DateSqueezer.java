@@ -10,7 +10,7 @@ import java.util.List;
 
 public class DateSqueezer implements ValueSqueezer {
 
-    public static DateSqueezer DATE_SQUEEZER = new DateSqueezer();
+    public static final DateSqueezer DATE_SQUEEZER = new DateSqueezer();
 
     private static final DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("ddMMyy");
 

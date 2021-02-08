@@ -8,7 +8,7 @@ import java.util.List;
 
 public class BlankSqueezer implements ValueSqueezer {
 
-    public static BlankSqueezer BLANK_SQUEEZER = new BlankSqueezer();
+    public static final BlankSqueezer BLANK_SQUEEZER = new BlankSqueezer();
 
     @Override
     public String squeeze(FieldDefinition field, Object value) {

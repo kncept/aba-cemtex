@@ -8,7 +8,7 @@ import java.util.regex.Pattern;
 
 public class BsbSqueezer implements ValueSqueezer {
 
-    public static BsbSqueezer BSB_SQUEEZER = new BsbSqueezer();
+    public static final BsbSqueezer BSB_SQUEEZER = new BsbSqueezer();
 
     private Pattern pattern = Pattern.compile("\\d{3}-\\d{3}");
 

@@ -10,7 +10,7 @@ import java.util.List;
 
 public class TimeSqueezer implements ValueSqueezer {
 
-    public static TimeSqueezer TIME_SQUEEZER = new TimeSqueezer();
+    public static final TimeSqueezer TIME_SQUEEZER = new TimeSqueezer();
 
     private static final DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("HHmm");
 

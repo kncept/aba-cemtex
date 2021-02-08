@@ -8,7 +8,7 @@ import java.util.List;
 
 public class WithholdingTaxIndicatorSqueezer implements ValueSqueezer {
 
-    public static WithholdingTaxIndicatorSqueezer WITHHOLDING_SQUEEZER = new WithholdingTaxIndicatorSqueezer();
+    public static final WithholdingTaxIndicatorSqueezer WITHHOLDING_SQUEEZER = new WithholdingTaxIndicatorSqueezer();
 
     @Override
     public String squeeze(FieldDefinition field, Object value) {

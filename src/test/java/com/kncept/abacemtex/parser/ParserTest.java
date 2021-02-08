@@ -42,9 +42,10 @@ public class ParserTest {
     public void reconstituteTestFile(String fileName) throws IOException  {
         List<String> lines = new ArrayList<>();
         InputStream in = null;
+        BufferedReader bIn = null;
         try{
             in = getClass().getResourceAsStream(fileName);
-            BufferedReader bIn = new BufferedReader(new InputStreamReader(in));
+            bIn = new BufferedReader(new InputStreamReader(in, "US-ASCII"));
             String line = bIn.readLine();
             while (line != null) {
                 if (!line.isBlank()) lines.add(line);
@@ -53,6 +54,9 @@ public class ParserTest {
         } finally {
             if (in != null) {
                 in.close();
+            }
+            if (bIn != null) {
+                bIn.close();
             }
         }
 

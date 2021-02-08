@@ -8,7 +8,7 @@ import java.util.List;
 
 public class TransactionCodeSqueezer implements ValueSqueezer {
 
-    public static TransactionCodeSqueezer TX_CODE_SQUEEZER = new TransactionCodeSqueezer();
+    public static final TransactionCodeSqueezer TX_CODE_SQUEEZER = new TransactionCodeSqueezer();
 
     @Override
     public String squeeze(FieldDefinition field, Object value) {

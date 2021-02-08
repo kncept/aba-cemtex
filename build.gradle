@@ -10,7 +10,7 @@ group = 'com.kncept.abacemtex'
 // 'snapshot' versions may not be released to OSSRH
 // use `publishToMavenLocal` for local :)
 // use `publish` for ossrh
-version = '0.2.0-SNAPSHOT'
+version = '0.3.0-SNAPSHOT'
 sourceCompatibility = 14
 targetCompatibility = 14
 description = """
@@ -124,6 +124,15 @@ spotbugsMain {
 		html {
 			enabled = true
 			destination = file("$buildDir/reports/spotbugs/main/spotbugs.html")
+			stylesheet = 'fancy-hist.xsl'
+		}
+	}
+}
+spotbugsTest {
+	reports {
+		html {
+			enabled = true
+			destination = file("$buildDir/reports/spotbugs/test/spotbugs.html")
 			stylesheet = 'fancy-hist.xsl'
 		}
 	}

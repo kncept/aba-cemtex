@@ -10,8 +10,8 @@ import static com.kncept.abacemtex.file.field.valuesqueezer.BlankPaddedSqueezer.
 
 public class StringSqueezer implements ValueSqueezer {
 
-    public static ValueSqueezer STRING_SQUEEZER = rightPadded(" ", new StringSqueezer());
-    public static ValueSqueezer ACCOUNT_STRING_SQUEEZER = leftPadded(" ", new StringSqueezer());
+    public static final ValueSqueezer STRING_SQUEEZER = rightPadded(" ", new StringSqueezer());
+    public static final ValueSqueezer ACCOUNT_STRING_SQUEEZER = leftPadded(" ", new StringSqueezer());
 
     @Override
     public String squeeze(FieldDefinition field, Object value) {

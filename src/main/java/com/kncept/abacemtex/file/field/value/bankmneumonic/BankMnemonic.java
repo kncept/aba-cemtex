@@ -11,18 +11,23 @@ public interface BankMnemonic {
     String getName();
     void onMneumonicSet(HeaderRecord headerRecord);
 
-    Map<String, BankMnemonic> nonEnumCache = new HashMap<>();
+    class Cache {
+        static final Map<String, BankMnemonic> nonEnumCache = new HashMap<>();
+        public static BankMnemonic lookup(String id) {
+            if (id == null) return null;
+            for (BankMnemonics knownBank : BankMnemonics.values()) {
+                if (knownBank.getMneumonic().equals(id))
+                    return knownBank;
+            }
+            if (nonEnumCache.containsKey(id)) return nonEnumCache.get(id);
+            BankMnemonic mnemonic = new UnknownBankMneumonic(id);
+            nonEnumCache.put(id, mnemonic);
+            return mnemonic;
+        }
+    }
 
     public static BankMnemonic lookup(String id) {
-        if (id == null) return null;
-        for (BankMnemonics knownBank : BankMnemonics.values()) {
-            if (knownBank.getMneumonic().equals(id))
-                return knownBank;
-        }
-        if (nonEnumCache.containsKey(id)) return nonEnumCache.get(id);
-        BankMnemonic mnemonic = new UnknownBankMneumonic(id);
-        nonEnumCache.put(id, mnemonic);
-        return mnemonic;
+        return Cache.lookup(id);
     }
 
     class UnknownBankMneumonic implements BankMnemonic {

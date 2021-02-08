@@ -27,7 +27,6 @@ public class RecordDefinitionTest {
     @ParameterizedTest
     @MethodSource("recordDefinitions")
     public void recordDefinitionNamesAreSane(RecordDefinition recordDefinition) {
-        Set<String> fieldNames = new HashSet<>();
         recordDefinition.fields.forEach(field -> {
             Assertions.assertEquals(field.description.trim(), field.description);
         });
