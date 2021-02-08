@@ -3,6 +3,7 @@ plugins {
 	id 'java-library'
 	id 'maven-publish'
 	id 'signing'
+	id "com.github.spotbugs" version "4.6.0"
 }
 
 group = 'com.kncept.abacemtex'
@@ -43,7 +44,7 @@ test {
 // https://docs.gradle.org/current/userguide/gradle_wrapper.html#customizing_wrapper
 wrapper {
 	distributionType = Wrapper.DistributionType.BIN
-	gradleVersion = "6.7.1"
+	gradleVersion = "6.8.1"
 }
 
 
@@ -118,3 +119,12 @@ javadoc {
 	}
 }
 
+spotbugsMain {
+	reports {
+		html {
+			enabled = true
+			destination = file("$buildDir/reports/spotbugs/main/spotbugs.html")
+			stylesheet = 'fancy-hist.xsl'
+		}
+	}
+}

@@ -19,7 +19,7 @@ public class Parser {
     List<CemtexRecord> records = new ArrayList<>();
 
     public Parser(InputStream in) throws IOException {
-        BufferedReader bIn = new BufferedReader(new InputStreamReader(in));
+        BufferedReader bIn = new BufferedReader(new InputStreamReader(in, "US-ASCII"));
         String line = bIn.readLine();
         while (line != null) {
             parseLine(line);

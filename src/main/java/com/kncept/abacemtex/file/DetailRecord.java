@@ -59,10 +59,14 @@ public class DetailRecord extends CemtexRecord<DetailRecord> {
      * @return
      */
     public DetailRecord amount(BigDecimal amountInDollars) {
-        if (amountInDollars == null) value("Amount", null);
+        if (amountInDollars == null) return value("Amount", null);
         return amount(amountInDollars.multiply(BigDecimal.valueOf(100)).longValue());
     }
 
+    /**
+     * Easy indicator if this if for money being transferred OUT
+     * @return
+     */
     public boolean isOutbound() {
         TransactionCode transactionCode = (TransactionCode) getValue(fieldDefinition("Transaction Code"));
         if (transactionCode == null) throw new IllegalStateException("No direction yet set");
