@@ -1,7 +1,7 @@
 # aba-cemtex
 CemtexABA Library - Australian Bankers Association format
 
-If you require a custom integration, or a support contract please contact nicholas.krul@gmail.com
+If you require a custom integration, or a support contract please contact custom.koncept@gmail.com
 
 # Why?
 I've worked with these files many times, and every single company has a different 'standards free' implementation.
