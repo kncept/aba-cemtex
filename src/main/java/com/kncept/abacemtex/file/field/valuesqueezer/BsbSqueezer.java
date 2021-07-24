@@ -15,7 +15,13 @@ public class BsbSqueezer implements ValueSqueezer {
     @Override
     public String squeeze(FieldDefinition field, Object value) {
         if (value == null) return null;
-        return value.toString();
+        String bsbString = value.toString();
+
+        // convert 123456 to 123-456
+        if (bsbString.length() == 6 && !bsbString.contains("-")) {
+            return bsbString.substring(0, 3) + "-" + bsbString.substring(3);
+        }
+        return bsbString;
     }
 
     @Override

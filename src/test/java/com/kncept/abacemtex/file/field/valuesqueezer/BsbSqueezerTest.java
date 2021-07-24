@@ -32,10 +32,14 @@ public class BsbSqueezerTest {
     }
 
     @Test
+    public void squeezesValuesWithoutAHyphen() {
+        assertNoErrors("123456");
+        assertNoErrors(123456);
+    }
+
+    @Test
     public void invaldBadBsb() {
         assertFormatError(new Object());
-        assertFormatError("123456");
-        assertFormatError(123456);
         assertFormatError("12-3456");
         assertFormatError("123--456");
     }
